@@ -6,8 +6,7 @@
 #
 #  id                 :bigint           not null, primary key
 #  email              :string(255)      not null
-#  first_name         :string(255)      not null
-#  last_name          :string(255)      not null
+#  name               :string(255)      not null
 #  password_encrypted :string(255)      not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -17,7 +16,9 @@
 #  index_users_on_email  (email)
 #
 class User < ApplicationRecord
-  def self.signup(email:, password:, firstname:, lastname:)
+  has_many :user_sessions, dependent: :destroy
+
+  def self.signup(email:, password:, name:)
     User.transaction do
       password_encrypted = BCrypt::Engine.hash_secret(password,
                                                       Rails.application.credentials.config[:password_salt])
