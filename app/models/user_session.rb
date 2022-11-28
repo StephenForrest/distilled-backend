@@ -28,7 +28,7 @@ class UserSession < ApplicationRecord
   def self.login(email:, password:)
     user = User.find_by(email:)
     password_hash = BCrypt::Engine.hash_secret(password, Rails.application.credentials.config[:password_salt])
-    raise Errors::InvalidCredentials if user.nil? || user.password_encrypted != password_hash
+    raise ::Errors::InvalidCredentials if user.nil? || user.password_encrypted != password_hash
 
     UserSession.generate_user_session(user:)
   end

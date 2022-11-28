@@ -9,7 +9,7 @@ module Mutations
 
     def resolve(email:, password:)
       UserSession.login(email:, password:)
-    rescue Errors::InvalidCredentials
+    rescue ::Errors::InvalidCredentials
       raise GraphQL::ExecutionError, 'Invalid credentials'
     end
   end
