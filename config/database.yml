@@ -83,6 +83,4 @@ test:
 #
 production:
   <<: *default
-  database: api_getdistilled_io_production
-  username: api_getdistilled_io
-  password: <%= ENV["API_GETDISTILLED_IO_DATABASE_PASSWORD"] %>
+  url: <%= Rails.application.credentials.config[:database_url] %>
