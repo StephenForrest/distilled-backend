@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :user_sessions, dependent: :destroy
   has_many :workspace_members, dependent: :destroy
   has_many :workspaces, through: :workspace_members
+  has_many :plans, dependent: :destroy
 
   def self.signup(email:, password:, name:)
     User.transaction do

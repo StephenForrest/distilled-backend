@@ -2,10 +2,10 @@
 
 # == Schema Information
 #
-# Table name: workspace_members
+# Table name: plans
 #
 #  id           :bigint           not null, primary key
-#  role         :integer          default("admin"), not null
+#  name         :string           default(""), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  user_id      :bigint           not null
@@ -13,12 +13,10 @@
 #
 # Indexes
 #
-#  index_workspace_members_on_user_id       (user_id)
-#  index_workspace_members_on_workspace_id  (workspace_id)
+#  index_plans_on_user_id       (user_id)
+#  index_plans_on_workspace_id  (workspace_id)
 #
 FactoryBot.define do
-  factory :workspace_member do
-    workspace { FactoryBot.create(:workspace) }
-    user { FactoryBot.create(:user) }
+  factory :plan do
   end
 end

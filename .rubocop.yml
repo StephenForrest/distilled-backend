@@ -51,7 +51,6 @@ Rails/ActionControllerTestCase:
   StyleGuide: 'https://rails.rubystyle.guide/#integration-testing'
   Reference: 'https://api.rubyonrails.org/classes/ActionController/TestCase.html'
   Enabled: 'pending'
-  SafeAutocorrect: false
   VersionAdded: '2.14'
   Include:
     - '**/test/**/*.rb'
