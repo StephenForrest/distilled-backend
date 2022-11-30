@@ -17,6 +17,8 @@
 #
 class User < ApplicationRecord
   has_many :user_sessions, dependent: :destroy
+  has_many :workspace_members, dependent: :destroy
+  has_many :workspaces, through: :workspace_members
 
   def self.signup(email:, password:, name:)
     User.transaction do
@@ -24,7 +26,7 @@ class User < ApplicationRecord
                                                       Rails.application.credentials.config[:password_salt])
       new_user = User.new(email:, password_encrypted:, name:)
       new_user.save!
-
+      Workspace.create_default!(user: new_user)
       new_user
     end
   end

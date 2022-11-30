@@ -31,6 +31,10 @@ module Mutations
           expect(subject['data']['signUp']['sessionId']).to eq(UserSession.last.session_id)
           expect(UserSession.last.user.email).to eq('hello@hello.com')
         end
+
+        it 'creates a new workspace' do
+          expect { subject }.to change { Workspace.all.count }.by(1)
+        end
       end
 
       context 'when user already exists' do
