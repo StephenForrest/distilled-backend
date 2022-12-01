@@ -22,7 +22,7 @@ require 'securerandom'
 class Plan < ApplicationRecord
   belongs_to :workspace
   belongs_to :user
-  has_many :focus_areas, dependent: :destroy
+  has_many :goals, dependent: :destroy
 
   before_save :generate_uuid
 

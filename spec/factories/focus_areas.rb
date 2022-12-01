@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: focus_areas
@@ -14,6 +16,5 @@
 #
 FactoryBot.define do
   factory :focus_area do
-    
   end
 end

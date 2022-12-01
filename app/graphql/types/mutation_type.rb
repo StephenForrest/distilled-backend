@@ -9,5 +9,8 @@ module Types
 
     # Plans
     field :create_plan, mutation: Mutations::CreatePlanMutation
+
+    # Goals
+    field :create_goal, mutation: Mutations::CreateGoalMutation
   end
 end
