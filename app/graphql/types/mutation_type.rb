@@ -6,5 +6,8 @@ module Types
     field :create_auth, mutation: Mutations::CreateAuthMutation
     field :sign_out, mutation: Mutations::SignOutMutation
     field :sign_up, mutation: Mutations::SignUpMutation
+
+    # Plans
+    field :create_plan, mutation: Mutations::CreatePlanMutation
   end
 end

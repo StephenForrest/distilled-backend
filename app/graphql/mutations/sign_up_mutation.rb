@@ -2,9 +2,9 @@
 
 module Mutations
   class SignUpMutation < BaseMutation
-    argument :email, String, required: true
-    argument :password, String, required: true
-    argument :name, String, required: true
+    argument :email, String, required: true, validates: { allow_blank: false }
+    argument :password, String, required: true, validates: { allow_blank: false }
+    argument :name, String, required: true, validates: { allow_blank: false }
 
     field :session_id, String, null: false
 

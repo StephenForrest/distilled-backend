@@ -6,6 +6,7 @@
 #
 #  id           :bigint           not null, primary key
 #  name         :string           default(""), not null
+#  uuid         :string           default(""), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  user_id      :bigint           not null
