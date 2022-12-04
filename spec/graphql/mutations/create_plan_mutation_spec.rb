@@ -45,7 +45,7 @@ module Mutations
         let(:name) { 'Test plan' }
 
         it 'creates a plan' do
-          expect(subject['data']['createPlan']['plan']['id']).to eq(Plan.last.to_param)
+          expect(subject['data']['createPlan']['plan']['id']).to eq(Plan.last.uuid)
         end
       end
     end

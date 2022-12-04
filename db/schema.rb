@@ -25,6 +25,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_113102) do
   create_table "goals", force: :cascade do |t|
     t.bigint "plan_id", null: false
     t.string "title", default: "", null: false
+    t.datetime "expires_on"
+    t.integer "tracking_status", default: 0, null: false
+    t.integer "progress", default: 0, null: false
+    t.bigint "owner_id", default: -1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["plan_id"], name: "index_goals_on_plan_id"

@@ -7,11 +7,12 @@ module Mutations
     describe '.resolve' do
       let(:mutation) do
         <<~GQL
-          mutation($title: String!, $planId: String!) {
-            createGoal(title: $title, planId: $planId) {
+          mutation($title: String!, $planUuid: String!, $expiresOn: String!) {
+            createGoal(title: $title, planUuid: $planUuid, expiresOn: $expiresOn) {
               goal {
-                id,
+                id
                 title
+                expiresOn
               }
             }
           }
@@ -21,7 +22,7 @@ module Mutations
       subject do
         execute_graphql(
           mutation,
-          { planId: plan_id, title: },
+          { planUuid: plan_id, title:, expiresOn: expires_on },
           {
             current_user: user,
             current_workspace: workspace
@@ -34,6 +35,7 @@ module Mutations
         let(:workspace) { nil }
         let(:title) { 'Goal' }
         let(:plan_id) { create(:plan).to_param }
+        let(:expires_on) { DateTime.now.utc.to_s }
 
         it 'throws error' do
           expect(subject['errors'].first['message']).to eq('Authentication expired')
@@ -45,7 +47,8 @@ module Mutations
         let(:workspace) { user.workspaces.first }
         let(:title) { 'Test goal' }
         let(:plan) { create(:plan, workspace:, user:) }
-        let(:plan_id) { plan.to_param }
+        let(:plan_id) { plan.uuid }
+        let(:expires_on) { DateTime.now.utc.to_s }
 
         it 'creates an goal' do
           expect(subject['data']['createGoal']['goal']['id']).to eq(Goal.last.to_param)

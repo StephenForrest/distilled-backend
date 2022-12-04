@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 module Queries
-  RSpec.describe 'GetPlan', type: :graphql do
+  RSpec.describe 'GetPlans', type: :graphql do
     let(:uuid) { nil }
     describe '.resolve' do
       let(:query) do
         <<~GQL
-          query getPlan($uuid: String!) {
-             getPlan(uuid: $uuid) {
+          query getPlans {
+             getPlans {
                id
                name
              }
@@ -41,11 +41,11 @@ module Queries
       context 'with a valid user' do
         let(:user) { create(:user_with_workspace) }
         let(:workspace) { user.workspaces.first }
-        let(:plan) { create(:plan, user:, workspace:) }
+        let!(:plan) { create(:plan, user:, workspace:) }
         let(:uuid) { plan.uuid }
 
-        it 'returns a plan' do
-          expect(subject['data']['getPlan']['id']).to eq(plan.uuid)
+        it 'returns an error of plans' do
+          expect(subject['data']['getPlans'].size).to eq(1)
         end
       end
     end

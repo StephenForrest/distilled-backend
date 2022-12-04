@@ -14,6 +14,7 @@ class Workspace < ApplicationRecord
   has_many :workspace_members, dependent: :destroy
   has_many :integrations, dependent: :destroy
   has_many :plans, dependent: :destroy
+  has_many :users, through: :workspace_members
 
   def self.create_default!(user:)
     workspace = Workspace.create!(

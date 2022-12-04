@@ -7,6 +7,10 @@ module Types
       field :name, type: String, null: true
       field :uuid, type: String, null: false
       field :goals, type: [Types::Plan::GoalType], null: true
+
+      def id
+        object.uuid
+      end
     end
   end
 end
