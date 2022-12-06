@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_090208) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_054113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "actions", force: :cascade do |t|
+    t.bigint "success_criteria_id", null: false
     t.integer "action_type", default: 0, null: false
     t.integer "action_object_id", default: -1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "success_criteria_id"
     t.index ["success_criteria_id"], name: "index_actions_on_success_criteria_id"
   end
 
@@ -73,13 +73,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_090208) do
 
   create_table "success_criterias", force: :cascade do |t|
     t.bigint "goal_id", null: false
+    t.integer "success_criteria_type", default: 0, null: false
     t.datetime "start_date"
     t.datetime "end_date"
     t.bigint "owner_id", default: -1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description", default: ""
-    t.integer "success_criteria_type", default: 0, null: false
     t.index ["goal_id"], name: "index_success_criterias_on_goal_id"
   end
 

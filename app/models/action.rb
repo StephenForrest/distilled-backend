@@ -9,7 +9,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  action_object_id    :integer          default(-1), not null
-#  success_criteria_id :bigint
+#  success_criteria_id :bigint           not null
 #
 # Indexes
 #
