@@ -15,4 +15,5 @@
 #  index_checklists_on_action_id  (action_id)
 #
 class Checklist < ApplicationRecord
+  belongs_to :action
 end

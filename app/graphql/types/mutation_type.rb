@@ -12,5 +12,8 @@ module Types
 
     # Goals
     field :create_goal, mutation: Mutations::CreateGoalMutation
+
+    # Create Action
+    field :create_action, mutation: Mutations::CreateActionMutation
   end
 end

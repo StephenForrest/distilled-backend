@@ -5,7 +5,7 @@
 # Table name: actions
 #
 #  id                  :bigint           not null, primary key
-#  action_type         :integer          default("checklist"), not null
+#  tracking_type       :integer          default("checklist"), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  action_object_id    :integer          default(-1), not null
@@ -17,7 +17,7 @@
 #
 FactoryBot.define do
   factory :action do
-    action_type { 'checklist' }
+    tracking_type { 'checklist' }
     success_criteria { create(:success_criteria) }
   end
 end

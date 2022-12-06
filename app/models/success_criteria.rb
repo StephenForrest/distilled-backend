@@ -7,6 +7,7 @@
 #  id                    :bigint           not null, primary key
 #  description           :text             default("")
 #  end_date              :datetime
+#  name                  :string           default(""), not null
 #  start_date            :datetime
 #  success_criteria_type :integer          default("action"), not null
 #  created_at            :datetime         not null
@@ -32,5 +33,20 @@ class SuccessCriteria < ApplicationRecord
 
   def owner
     goal.workspace.users.find(owner_id)
+  end
+
+  def action
+    actions.first
+  end
+
+  def measurement
+    measurements.first
+  end
+
+  def create_action!(tracking_settings, tracking_type)
+    action = actions.create!(
+      tracking_type:
+    )
+    action.create_settings!(tracking_settings)
   end
 end

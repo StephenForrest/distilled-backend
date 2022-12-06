@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_054113) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "actions", force: :cascade do |t|
     t.bigint "success_criteria_id", null: false
-    t.integer "action_type", default: 0, null: false
+    t.integer "tracking_type", default: 0, null: false
     t.integer "action_object_id", default: -1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,6 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_054113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description", default: ""
+    t.string "name", default: "", null: false
     t.index ["goal_id"], name: "index_success_criterias_on_goal_id"
   end
 

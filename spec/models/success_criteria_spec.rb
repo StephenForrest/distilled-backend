@@ -7,6 +7,7 @@
 #  id                    :bigint           not null, primary key
 #  description           :text             default("")
 #  end_date              :datetime
+#  name                  :string           default(""), not null
 #  start_date            :datetime
 #  success_criteria_type :integer          default("action"), not null
 #  created_at            :datetime         not null
