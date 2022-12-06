@@ -10,9 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_01_113102) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_090208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actions", force: :cascade do |t|
+    t.integer "action_type", default: 0, null: false
+    t.integer "action_object_id", default: -1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "success_criteria_id"
+    t.index ["success_criteria_id"], name: "index_actions_on_success_criteria_id"
+  end
+
+  create_table "checklists", force: :cascade do |t|
+    t.bigint "action_id", null: false
+    t.json "settings", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["action_id"], name: "index_checklists_on_action_id"
+  end
 
   create_table "focus_areas", force: :cascade do |t|
     t.bigint "plan_id", null: false
@@ -34,6 +51,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_113102) do
     t.index ["plan_id"], name: "index_goals_on_plan_id"
   end
 
+  create_table "measurements", force: :cascade do |t|
+    t.bigint "success_criteria_id", null: false
+    t.integer "measurement_type", default: 0, null: false
+    t.integer "tracking_status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["success_criteria_id"], name: "index_measurements_on_success_criteria_id"
+  end
+
   create_table "plans", force: :cascade do |t|
     t.bigint "workspace_id", null: false
     t.bigint "user_id", null: false
@@ -43,6 +69,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_01_113102) do
     t.string "uuid", default: "", null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
     t.index ["workspace_id"], name: "index_plans_on_workspace_id"
+  end
+
+  create_table "success_criterias", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.bigint "owner_id", default: -1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description", default: ""
+    t.integer "success_criteria_type", default: 0, null: false
+    t.index ["goal_id"], name: "index_success_criterias_on_goal_id"
   end
 
   create_table "user_sessions", force: :cascade do |t|

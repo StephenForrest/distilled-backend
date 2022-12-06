@@ -19,6 +19,12 @@
 #  index_goals_on_plan_id  (plan_id)
 #
 FactoryBot.define do
-  factory :goals do
+  factory :goal do
+    title { 'Example Goal' }
+    expires_on { DateTime.now.utc }
+    progress { 10 }
+    tracking_status { 'ontrack' }
+    owner_id { create(:user).id }
+    plan_id { create(:plan).id }
   end
 end

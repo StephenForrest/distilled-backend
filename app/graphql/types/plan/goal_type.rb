@@ -10,6 +10,9 @@ module Types
       field :tracking_status, type: String, null: false
       field :progress, type: Integer, null: false
       field :created_at, type: String, null: false
+      field :actions_count, type: Integer, null: false
+      field :measurements_count, type: Integer, null: false
+      field :success_criterias, type: [Types::Plan::SuccessCriteriaType], null: true
     end
   end
 end

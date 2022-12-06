@@ -21,5 +21,24 @@
 require 'rails_helper'
 
 RSpec.describe Goal, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { create(:user_with_workspace) }
+  let(:workspace) { user.workspaces.first }
+  let(:plan) { create(:plan, user:, workspace:) }
+  let(:goal) { create(:goal, owner_id: user.id, plan:) }
+
+  it 'tests associations' do
+    expect(goal.owner).to eq(user)
+    expect(goal.workspace).to eq(workspace)
+  end
+
+  context 'with success_criterias' do
+    let!(:success_criteria1) { create(:success_criteria, :with_action, goal:) }
+    let!(:success_criteria2) { create(:success_criteria, :with_measurement, goal:) }
+
+    it 'tests associations' do
+      expect(goal.success_criterias.size).to eq(2)
+      expect(goal.actions_count).to eq(1)
+      expect(goal.measurements_count).to eq(1)
+    end
+  end
 end

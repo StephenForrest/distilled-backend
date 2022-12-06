@@ -20,6 +20,7 @@
 #
 class Goal < ApplicationRecord
   belongs_to :plan
+  has_many :success_criterias, dependent: :destroy
   delegate :workspace, to: :plan, allow_nil: true
 
   enum :tracking_status, {
@@ -31,5 +32,13 @@ class Goal < ApplicationRecord
     return nil if owner_id == -1
 
     workspace.users.find(owner_id)
+  end
+
+  def actions_count
+    success_criterias.where(success_criteria_type: :action).count
+  end
+
+  def measurements_count
+    success_criterias.where(success_criteria_type: :measurement).count
   end
 end
