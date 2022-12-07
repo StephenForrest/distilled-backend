@@ -24,6 +24,15 @@ class Action < ApplicationRecord
     milestone: 1
   }
 
+  def validate_settings(tracking_settings, errors)
+    raise 'unknown tracking type' unless tracking_type.to_sym == :checklist
+
+    validation_errors = Checklist.validate_settings(self, tracking_settings[:checklist])
+    return if validation_errors.blank?
+
+    errors.add('tracking_settings', validation_errors)
+  end
+
   def tracking
     raise 'unknown tracking type' unless tracking_type.to_sym == :checklist
 

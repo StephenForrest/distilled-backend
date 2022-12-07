@@ -16,4 +16,19 @@
 #
 class Checklist < ApplicationRecord
   belongs_to :action
+
+  # rubocop:disable Metrics/AbcSize
+  def self.validate_settings(action, tracking_settings)
+    errors = ValidationErrors.new
+    tracking_settings.each do |setting|
+      setting_error = ValidationErrors.new
+      setting_error.add('item', 'Give it a name') if setting[:item].blank?
+      if DateTime.parse(setting[:due_date]).utc > action.success_criteria.end_date.utc
+        setting_error.add('due_date', "Due date cannot be later than the action's due date")
+      end
+      errors.add(setting[:id], setting_error) if setting_error.present?
+    end
+    errors
+  end
+  # rubocop:enable Metrics/AbcSize
 end

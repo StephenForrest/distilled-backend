@@ -32,6 +32,7 @@ module Mutations
               action {
                 id
               }
+              errors
             }
           }
         GQL
@@ -64,6 +65,76 @@ module Mutations
             .by(1)
             .and change { SuccessCriteria.all.size }.by(1)
             .and change { Checklist.all.size }.by(1)
+        end
+      end
+
+      describe 'validation tests' do
+        context 'when name is empty' do
+          let(:name) { '' }
+
+          it 'does not create and returns an error' do
+            result = nil
+            expect { result = subject }.to change { Action.all.size }
+              .by(0)
+              .and change { SuccessCriteria.all.size }.by(0)
+              .and change { Checklist.all.size }.by(0)
+            expect(result['data']['createAction']['errors']['name']).to eq('Please add a name')
+          end
+        end
+
+        context 'when end_date is less than start_date' do
+          let(:end_date) { (DateTime.new - 7.days).utc.to_s }
+          let(:start_date) { DateTime.new.utc.to_s }
+
+          it 'does not create and returns an error' do
+            result = nil
+            expect { result = subject }.to change { Action.all.size }
+              .by(0)
+              .and change { SuccessCriteria.all.size }.by(0)
+              .and change { Checklist.all.size }.by(0)
+            expect(result['data']['createAction']['errors']['endDate']).to eq('End date cannot be later than start date')
+          end
+        end
+
+        context 'when end_date is less than goal_date' do
+          let(:goal) { create(:goal, owner_id: user.id, plan:, expires_on: (DateTime.new - 10.days).utc.to_s) }
+          let(:end_date) { (DateTime.new - 7.days).utc.to_s }
+          let(:start_date) { (DateTime.new - 10.days).utc.to_s }
+
+          it 'does not create and returns an error' do
+            result = nil
+            expect { result = subject }.to change { Action.all.size }
+              .by(0)
+              .and change { SuccessCriteria.all.size }.by(0)
+              .and change { Checklist.all.size }.by(0)
+            expect(result['data']['createAction']['errors']['endDate']).to eq('End date cannot be later than goal end date')
+          end
+        end
+
+        context 'when checklist validations fail' do
+          let(:tracking_settings) do
+            {
+              checklist: [{
+                id: 'id', item: 'test', dueDate: DateTime.now.utc.to_s
+              }, {
+                id: 'id-no-item-name', item: '', dueDate: DateTime.now.utc.to_s
+              }, {
+                id: 'id-invalid-due-date', item: 'arindam', dueDate: (DateTime.now + 10.days).utc.to_s
+              }]
+            }
+          end
+
+          it 'does not create and returns an error' do
+            result = nil
+            expect { result = subject }.to change { Action.all.size }
+              .by(0)
+              .and change { SuccessCriteria.all.size }.by(0)
+              .and change { Checklist.all.size }.by(0)
+            tracking_settings = result['data']['createAction']['errors']['trackingSettings']
+            expect(tracking_settings['id-no-item-name']['item']).to eq('Give it a name')
+            expect(tracking_settings['id-invalid-due-date']['dueDate'])
+              .to eq("Due date cannot be later than the action's due date")
+          end
         end
       end
     end

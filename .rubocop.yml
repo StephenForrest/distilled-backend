@@ -1028,3 +1028,12 @@ Metrics/BlockLength:
   Enabled: true
   Exclude:
     - '**/*spec.rb'
+
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - '**/*spec.rb'
+
+Metrics/ModuleLength:
+  Exclude:
+    - '**/*spec.rb'
