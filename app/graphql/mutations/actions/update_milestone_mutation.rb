@@ -5,17 +5,17 @@ module Mutations
     class UpdateMilestoneMutation < BaseAuthorizedMutation
       argument :id, String, required: true
 
-      argument :percent, Int, required: true
+      argument :item_id, String, required: true
       argument :checked, Boolean, required: true
 
       field :goal, Types::Plan::GoalType, null: false
 
-      def resolve(id:, percent:, checked:)
+      def resolve(id:, item_id:, checked:)
         milestone = current_workspace.milestones.find(id)
         raise GraphQL::ExecutionError, 'Milestone not found' if milestone.blank?
 
         new_settings = milestone.settings['milestone'].map do |s|
-          s['checked'] = checked if s['percent'] == percent
+          s['checked'] = checked if s['id'] == item_id
           s
         end
 

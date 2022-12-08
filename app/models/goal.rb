@@ -34,8 +34,8 @@ class Goal < ApplicationRecord
 
   def completion
     items = success_criterias.length
-    completions = success_criterias.map(&:completion).sum
-    completions.to_f / items.size
+    completions_sum= success_criterias.map(&:completion).sum
+    completions_sum.to_f / items
   end
 
   def owner
