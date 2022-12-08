@@ -574,7 +574,7 @@ Rails/NegateInclude:
 
 Rails/NotNullColumn:
   Description: 'Do not add a NOT NULL column without a default value.'
-  Enabled: true
+  Enabled: false
   VersionAdded: '0.43'
   Include:
     - db/migrate/*.rb
@@ -1035,5 +1035,9 @@ Metrics/MethodLength:
     - '**/*spec.rb'
 
 Metrics/ModuleLength:
+  Exclude:
+    - '**/*spec.rb'
+
+Layout/LineLength:
   Exclude:
     - '**/*spec.rb'
