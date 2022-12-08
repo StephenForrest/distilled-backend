@@ -10,7 +10,7 @@
 #  name                  :string           default(""), not null
 #  start_date            :datetime
 #  success_criteria_type :integer          default("action"), not null
-#  tracking_status       :integer          default(0), not null
+#  tracking_status       :integer          default("ontrack"), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  goal_id               :bigint           not null

@@ -3,12 +3,12 @@
 module Types
   module Plan
     module Actions
-      class ChecklistType < Types::BaseObject
+      class ChecklistType < BaseActionType
         field :id, String, null: false
         field :settings, GraphQL::Types::JSON, null: false
 
         def settings
-          { "checklist": object.settings['checklist'].map { |s| s.deep_transform_keys { |k| k.camelize(:lower) } } }
+          { "checklist": serialize_settings(object.settings['checklist']) }
         end
       end
     end

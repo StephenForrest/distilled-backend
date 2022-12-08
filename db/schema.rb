@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_08_110305) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_181133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_110305) do
     t.bigint "workspace_id", null: false
     t.index ["success_criteria_id"], name: "index_measurements_on_success_criteria_id"
     t.index ["workspace_id"], name: "index_measurements_on_workspace_id"
+  end
+
+  create_table "milestones", force: :cascade do |t|
+    t.bigint "workspace_id", null: false
+    t.bigint "action_id", null: false
+    t.json "settings", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["action_id"], name: "index_milestones_on_action_id"
+    t.index ["workspace_id"], name: "index_milestones_on_workspace_id"
   end
 
   create_table "plans", force: :cascade do |t|

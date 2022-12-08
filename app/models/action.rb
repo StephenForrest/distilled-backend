@@ -21,6 +21,7 @@ class Action < ApplicationRecord
   belongs_to :success_criteria
   belongs_to :workspace
   has_many :checklists, dependent: :destroy
+  has_many :milestones, dependent: :destroy
 
   enum tracking_type: {
     checklist: 0,
@@ -28,31 +29,44 @@ class Action < ApplicationRecord
   }
 
   def validate_settings(tracking_settings, errors)
-    raise 'unknown tracking type' unless tracking_type.to_sym == :checklist
-
-    validation_errors = Checklist.validate_settings(self, tracking_settings[:checklist])
+    validation_errors = case tracking_type.to_sym
+                        when :milestone
+                          Milestone.validate_settings(self, tracking_settings[:milestone])
+                        when :checklist
+                          Checklist.validate_settings(self, tracking_settings[:checklist])
+                        else
+                          raise 'unknown tracking type'
+                        end
     return if validation_errors.blank?
 
     errors.add('tracking_settings', validation_errors)
   end
 
   def tracking
-    raise 'unknown tracking type' unless tracking_type.to_sym == :checklist
-
-    checklists.first
+    case tracking_type.to_sym
+    when :milestone
+      milestones.first
+    when :checklist
+      checklists.first
+    else
+      raise 'unknown tracking type'
+    end
   end
 
   delegate :completion, to: :tracking
 
   def create_settings!(tracking_settings)
-    raise "Unknown tracking type: #{tracking_type}" unless tracking_type.to_sym == :checklist
-
-    checklists.create!(settings: tracking_settings.as_json, workspace:)
+    case tracking_type.to_sym
+    when :milestone
+      milestones.create!(settings: tracking_settings.as_json, workspace:)
+    when :checklist
+      checklists.create!(settings: tracking_settings.as_json, workspace:)
+    else
+      raise 'unknown tracking type'
+    end
   end
 
   def update_settings!(tracking_settings)
-    raise 'unknown tracking type' unless tracking_type.to_sym == :checklist
-
-    checklists.first.update!(settings: tracking_settings.as_json)
+    tracking.update!(settings: tracking_settings.as_json)
   end
 end

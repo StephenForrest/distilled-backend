@@ -10,8 +10,8 @@ module Types
         # rubocop:disable Style/CaseLikeIf
         if object.is_a?(Checklist)
           Types::Plan::Actions::ChecklistType
-        elsif object.is_a?(Measurement)
-          Types::Plan::Actions::MeasurementType
+        elsif object.is_a?(Milestone)
+          Types::Plan::Actions::MilestoneType
         else
           raise GraphQL::ExecutionError, 'Invalid action'
         end

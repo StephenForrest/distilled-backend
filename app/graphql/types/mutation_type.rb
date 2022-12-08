@@ -19,7 +19,8 @@ module Types
     # success criteria
     field :update_success_criteria, mutation: Mutations::UpdateSuccessCriteriaMutation
 
-    # checklist
+    # actions
     field :update_checklist, mutation: Mutations::Actions::UpdateChecklistMutation
+    field :update_milestone, mutation: Mutations::Actions::UpdateMilestoneMutation
   end
 end

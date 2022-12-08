@@ -24,13 +24,19 @@ module Mutations
       success_criteria, goal = get_success_criteria_and_goal(plan_uuid:, goal_id:, success_criteria_id:)
 
       errors = ValidationErrors.new
-      SuccessCriteria.run_validations(goal:, name:, start_date:, end_date:, errors:)
-      success_criteria.validate_settings(tracking_settings, errors)
+      SuccessCriteria.transaction do
+        SuccessCriteria.run_validations(goal:, name:, start_date:, end_date:, errors:)
+        if errors.blank?
+          success_criteria.update!(name:, description:, start_date:, end_date:)
+          success_criteria.validate_settings(tracking_settings, errors)
+          raise ActiveRecord::Rollback if errors.present?
+
+          success_criteria.update_settings!(tracking_settings)
+        end
+      end
 
       return { errors: errors.serialize } if errors.present?
 
-      success_criteria.update!(name:, description:, start_date:, end_date:)
-      success_criteria.update_settings!(tracking_settings)
       { success_criteria: }
     end
     # rubocop:enable Metrics/ParameterLists
