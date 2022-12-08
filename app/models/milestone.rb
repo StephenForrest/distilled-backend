@@ -31,9 +31,9 @@ class Milestone < ApplicationRecord
     tracking_settings.each do |setting, _index|
       setting_error = ValidationErrors.new
       setting_error.add('percent', '') if setting[:percent].blank?
-      setting_error.add('percent', 'give a description of the milestone') if setting[:item].blank?
+      setting_error.add('item', 'give a description of the milestone') if setting[:item].blank?
 
-      errors.add(setting[:id], setting_error) if setting_error.present?
+      errors.add(setting[:percent].to_s, setting_error) if setting_error.present?
     end
     errors
   end
