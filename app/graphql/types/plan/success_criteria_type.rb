@@ -10,8 +10,8 @@ module Types
       field :start_date, type: String, null: true
       field :success_criteria_type, type: String, null: false
       field :owner, type: Types::User::CurrentUserType, null: true
-      field :success_criteria_type, type: String, null: false
       field :action, type: Types::Plan::ActionType, null: true
+      field :goal_id, type: String, null: true
     end
   end
 end

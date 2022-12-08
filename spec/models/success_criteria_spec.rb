@@ -14,10 +14,12 @@
 #  updated_at            :datetime         not null
 #  goal_id               :bigint           not null
 #  owner_id              :bigint           default(-1), not null
+#  workspace_id          :bigint           not null
 #
 # Indexes
 #
-#  index_success_criterias_on_goal_id  (goal_id)
+#  index_success_criterias_on_goal_id       (goal_id)
+#  index_success_criterias_on_workspace_id  (workspace_id)
 #
 require 'rails_helper'
 

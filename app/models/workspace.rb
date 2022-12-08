@@ -16,6 +16,11 @@ class Workspace < ApplicationRecord
   has_many :plans, dependent: :destroy
   has_many :users, through: :workspace_members
 
+  has_many :goals, dependent: :destroy
+  has_many :success_criterias, dependent: :destroy
+  has_many :actions, dependent: :destroy
+  has_many :checklists, dependent: :destroy
+
   def self.create_default!(user:)
     workspace = Workspace.create!(
       title: [Forgery::Basic.color, Forgery::Address.street_name.split(' ').first, rand(1000)].join('-').downcase

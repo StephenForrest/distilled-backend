@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_063742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,7 +20,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
     t.integer "action_object_id", default: -1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workspace_id", null: false
     t.index ["success_criteria_id"], name: "index_actions_on_success_criteria_id"
+    t.index ["workspace_id"], name: "index_actions_on_workspace_id"
   end
 
   create_table "checklists", force: :cascade do |t|
@@ -28,7 +30,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
     t.json "settings", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workspace_id", null: false
     t.index ["action_id"], name: "index_checklists_on_action_id"
+    t.index ["workspace_id"], name: "index_checklists_on_workspace_id"
   end
 
   create_table "focus_areas", force: :cascade do |t|
@@ -48,7 +52,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
     t.bigint "owner_id", default: -1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workspace_id", null: false
     t.index ["plan_id"], name: "index_goals_on_plan_id"
+    t.index ["workspace_id"], name: "index_goals_on_workspace_id"
   end
 
   create_table "measurements", force: :cascade do |t|
@@ -57,7 +63,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
     t.integer "tracking_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workspace_id", null: false
     t.index ["success_criteria_id"], name: "index_measurements_on_success_criteria_id"
+    t.index ["workspace_id"], name: "index_measurements_on_workspace_id"
   end
 
   create_table "plans", force: :cascade do |t|
@@ -81,7 +89,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_06_115134) do
     t.datetime "updated_at", null: false
     t.text "description", default: ""
     t.string "name", default: "", null: false
+    t.bigint "workspace_id", null: false
     t.index ["goal_id"], name: "index_success_criterias_on_goal_id"
+    t.index ["workspace_id"], name: "index_success_criterias_on_workspace_id"
   end
 
   create_table "user_sessions", force: :cascade do |t|

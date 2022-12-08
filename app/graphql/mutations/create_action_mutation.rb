@@ -25,13 +25,13 @@ module Mutations
       raise GraphQL::ExecutionError, 'No goal found' if goal.blank?
 
       errors = ValidationErrors.new
-      run_validations(goal:, name:, start_date:, end_date:, errors:)
+      SuccessCriteria.run_validations(goal:, name:, start_date:, end_date:, errors:)
 
       if errors.blank?
         action = SuccessCriteria.transaction do
-          success_criteria = create_success_critera(goal, name, description, start_date, end_date)
+          success_criteria = create_success_criteria(goal, name, description, start_date, end_date)
           tracking_type = tracking_settings.keys.first
-          action = success_criteria.actions.create!(tracking_type:)
+          action = success_criteria.actions.create!(tracking_type:, workspace_id: current_workspace.id)
           action.validate_settings(tracking_settings, errors)
           raise ActiveRecord::Rollback if errors.present?
 
@@ -47,30 +47,15 @@ module Mutations
 
     private
 
-    def create_success_critera(goal, name, description, start_date, end_date)
+    def create_success_criteria(goal, name, description, start_date, end_date)
       goal.success_criterias.create!(
         name:,
         description:,
         start_date:,
         end_date:,
-        owner_id: current_user.id
+        owner_id: current_user.id,
+        workspace_id: current_workspace.id
       )
-    end
-
-    def run_validations(goal:, name:, start_date:, end_date:, errors:)
-      errors.add('name', 'Please add a name') if name.blank?
-      validate_dates(goal, start_date, end_date, errors)
-      errors
-    end
-
-    def validate_dates(goal, start_date_str, end_date_str, errors)
-      start_date = DateTime.parse(start_date_str).utc
-      end_date = DateTime.parse(end_date_str).utc
-      goal_end_date = goal.expires_on.utc
-      errors.add('end_date', 'End date cannot be later than start date') if end_date < start_date
-      return unless end_date > goal_end_date
-
-      errors.add('end_date', 'End date cannot be later than goal end date')
     end
 
     # rubocop:enable Metrics/ParameterLists

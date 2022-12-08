@@ -15,5 +15,11 @@ module Types
 
     # Create Action
     field :create_action, mutation: Mutations::CreateActionMutation
+
+    # success criteria
+    field :update_success_criteria, mutation: Mutations::UpdateSuccessCriteriaMutation
+
+    # checklist
+    field :update_checklist, mutation: Mutations::Actions::UpdateChecklistMutation
   end
 end

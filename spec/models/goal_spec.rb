@@ -13,10 +13,12 @@
 #  updated_at      :datetime         not null
 #  owner_id        :bigint           default(-1), not null
 #  plan_id         :bigint           not null
+#  workspace_id    :bigint           not null
 #
 # Indexes
 #
-#  index_goals_on_plan_id  (plan_id)
+#  index_goals_on_plan_id       (plan_id)
+#  index_goals_on_workspace_id  (workspace_id)
 #
 require 'rails_helper'
 

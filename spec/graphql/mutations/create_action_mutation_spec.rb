@@ -7,7 +7,7 @@ module Mutations
     let(:user) { create(:user_with_workspace) }
     let(:workspace) { user.workspaces.first }
     let(:plan) { create(:plan, user:, workspace:) }
-    let(:goal) { create(:goal, owner_id: user.id, plan:) }
+    let(:goal) { create(:goal, owner_id: user.id, plan:, workspace_id: workspace.id) }
     let(:plan_id) { plan.uuid }
     let(:goal_id) { goal.to_param }
     let(:current_user) { user }
@@ -19,7 +19,7 @@ module Mutations
     let(:tracking_settings) do
       {
         checklist: [{
-          id: 'id', item: 'test', dueDate: DateTime.now.utc.to_s
+          id: 'id', item: 'test', dueDate: DateTime.now.utc.to_s, checked: false
         }]
       }
     end
@@ -115,11 +115,11 @@ module Mutations
           let(:tracking_settings) do
             {
               checklist: [{
-                id: 'id', item: 'test', dueDate: DateTime.now.utc.to_s
+                id: 'id', item: 'test', dueDate: DateTime.now.utc.to_s, checked: false
               }, {
-                id: 'id-no-item-name', item: '', dueDate: DateTime.now.utc.to_s
+                id: 'id-no-item-name', item: '', dueDate: DateTime.now.utc.to_s, checked: false
               }, {
-                id: 'id-invalid-due-date', item: 'arindam', dueDate: (DateTime.now + 10.days).utc.to_s
+                id: 'id-invalid-due-date', item: 'arindam', dueDate: (DateTime.now + 10.days).utc.to_s, checked: false
               }]
             }
           end
