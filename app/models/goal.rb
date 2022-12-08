@@ -28,8 +28,15 @@ class Goal < ApplicationRecord
 
   enum :tracking_status, {
     ontrack: 0,
-    atrisk: 1
+    atrisk: 1,
+    completed: 2
   }
+
+  def completion
+    items = success_criterias.length
+    completions = success_criterias.map(&:completion).sum
+    completions.to_f / items.size
+  end
 
   def owner
     return nil if owner_id == -1

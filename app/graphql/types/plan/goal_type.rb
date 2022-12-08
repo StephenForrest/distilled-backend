@@ -13,6 +13,7 @@ module Types
       field :actions_count, type: Integer, null: false
       field :measurements_count, type: Integer, null: false
       field :success_criterias, type: [Types::Plan::SuccessCriteriaType], null: true
+      field :completion, type: Float, null: false
     end
   end
 end

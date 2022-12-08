@@ -10,6 +10,7 @@
 #  name                  :string           default(""), not null
 #  start_date            :datetime
 #  success_criteria_type :integer          default("action"), not null
+#  tracking_status       :integer          default(0), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  goal_id               :bigint           not null
@@ -33,6 +34,20 @@ class SuccessCriteria < ApplicationRecord
     action: 0,
     measurement: 1
   }
+
+  enum :tracking_status, {
+    ontrack: 0,
+    atrisk: 1,
+    completed: 2
+  }
+
+  def settings_object
+    raise 'Not implemented' unless success_criteria_type == 'action'
+
+    action
+  end
+
+  delegate :completion, to: :settings_object
 
   def owner
     goal.workspace.users.find(owner_id)

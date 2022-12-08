@@ -12,6 +12,7 @@ module Types
       field :owner, type: Types::User::CurrentUserType, null: true
       field :action, type: Types::Plan::ActionType, null: true
       field :goal_id, type: String, null: true
+      field :completion, type: Float, null: false
     end
   end
 end

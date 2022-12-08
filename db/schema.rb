@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_08_063742) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_110305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_063742) do
     t.text "description", default: ""
     t.string "name", default: "", null: false
     t.bigint "workspace_id", null: false
+    t.integer "tracking_status", default: 0, null: false
     t.index ["goal_id"], name: "index_success_criterias_on_goal_id"
     t.index ["workspace_id"], name: "index_success_criterias_on_workspace_id"
   end

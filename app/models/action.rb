@@ -42,6 +42,8 @@ class Action < ApplicationRecord
     checklists.first
   end
 
+  delegate :completion, to: :tracking
+
   def create_settings!(tracking_settings)
     raise "Unknown tracking type: #{tracking_type}" unless tracking_type.to_sym == :checklist
 

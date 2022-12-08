@@ -20,6 +20,12 @@ class Checklist < ApplicationRecord
   belongs_to :action
   belongs_to :workspace
 
+  def completion
+    items = settings['checklist']
+    completed_items = items.select { |s| s['checked'] }
+    completed_items.size.to_f / items.size
+  end
+
   # rubocop:disable Metrics/AbcSize
   def self.validate_settings(action, tracking_settings)
     errors = ValidationErrors.new

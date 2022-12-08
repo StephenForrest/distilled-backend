@@ -8,7 +8,7 @@ module Mutations
       argument :item_id, String, required: true
       argument :checked, Boolean, required: true
 
-      field :checklist, Types::Plan::Actions::ChecklistType, null: false
+      field :goal, Types::Plan::GoalType, null: false
 
       def resolve(id:, item_id:, checked:)
         checklist = current_workspace.checklists.find(id)
@@ -21,7 +21,7 @@ module Mutations
 
         checklist.update!(settings: { checklist: new_settings })
 
-        { checklist: }
+        { goal: checklist.action.success_criteria.goal }
       end
     end
   end
