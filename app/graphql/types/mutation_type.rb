@@ -13,10 +13,8 @@ module Types
     # Goals
     field :create_goal, mutation: Mutations::CreateGoalMutation
 
-    # Create Action
-    field :create_action, mutation: Mutations::CreateActionMutation
-
     # success criteria
+    field :create_success_criteria, mutation: Mutations::CreateSuccessCriteriaMutation
     field :update_success_criteria, mutation: Mutations::UpdateSuccessCriteriaMutation
 
     # actions

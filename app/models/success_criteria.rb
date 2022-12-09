@@ -41,10 +41,26 @@ class SuccessCriteria < ApplicationRecord
     completed: 2
   }
 
-  def settings_object
-    raise 'Not implemented' unless success_criteria_type == 'action'
+  def settings_class
+    case success_criteria_type.to_s
+    when 'action'
+      Action
+    when 'measurement'
+      Measurement
+    else
+      raise 'Not implemented'
+    end
+  end
 
-    action
+  def settings_object
+    case success_criteria_type.to_s
+    when 'action'
+      action
+    when 'measurement'
+      measurement
+    else
+      raise 'Not implemented'
+    end
   end
 
   delegate :completion, to: :settings_object

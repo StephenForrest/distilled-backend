@@ -22,6 +22,8 @@ class Workspace < ApplicationRecord
   has_many :checklists, dependent: :destroy
   has_many :milestones, dependent: :destroy
 
+  has_many :integrations, dependent: :destroy
+
   def self.create_default!(user:)
     workspace = Workspace.create!(
       title: [Forgery::Basic.color, Forgery::Address.street_name.split(' ').first, rand(1000)].join('-').downcase

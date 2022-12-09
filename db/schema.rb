@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_08_181133) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_09_110603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_181133) do
     t.bigint "workspace_id", null: false
     t.index ["plan_id"], name: "index_goals_on_plan_id"
     t.index ["workspace_id"], name: "index_goals_on_workspace_id"
+  end
+
+  create_table "integrations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "workspace_id", null: false
+    t.string "name", default: "", null: false
+    t.integer "integration_type", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_integrations_on_user_id"
+    t.index ["workspace_id"], name: "index_integrations_on_workspace_id"
   end
 
   create_table "measurements", force: :cascade do |t|
