@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_09_110603) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_11_120110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,15 +68,41 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_09_110603) do
     t.index ["workspace_id"], name: "index_integrations_on_workspace_id"
   end
 
+  create_table "integrations_slack", force: :cascade do |t|
+    t.bigint "integration_id", null: false
+    t.bigint "workspace_id", null: false
+    t.text "token", null: false
+    t.string "team_id", null: false
+    t.string "team_name", default: "", null: false
+    t.json "scopes", default: [], null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["integration_id"], name: "index_integrations_slack_on_integration_id"
+    t.index ["workspace_id"], name: "index_integrations_slack_on_workspace_id"
+  end
+
   create_table "measurements", force: :cascade do |t|
     t.bigint "success_criteria_id", null: false
-    t.integer "measurement_type", default: 0, null: false
+    t.integer "tracking_type", default: 0, null: false
     t.integer "tracking_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "workspace_id", null: false
     t.index ["success_criteria_id"], name: "index_measurements_on_success_criteria_id"
     t.index ["workspace_id"], name: "index_measurements_on_workspace_id"
+  end
+
+  create_table "measurements_slack", force: :cascade do |t|
+    t.bigint "integrations_slack_id", null: false
+    t.bigint "workspace_id", null: false
+    t.bigint "measurement_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "value", default: 0, null: false
+    t.integer "metric", default: 0, null: false
+    t.index ["integrations_slack_id"], name: "index_measurements_slack_on_integrations_slack_id"
+    t.index ["measurement_id"], name: "index_measurements_slack_on_measurement_id"
+    t.index ["workspace_id"], name: "index_measurements_slack_on_workspace_id"
   end
 
   create_table "milestones", force: :cascade do |t|

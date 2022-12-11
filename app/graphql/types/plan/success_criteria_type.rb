@@ -11,6 +11,7 @@ module Types
       field :success_criteria_type, type: String, null: false
       field :owner, type: Types::User::CurrentUserType, null: true
       field :action, type: Types::Plan::ActionType, null: true
+      field :measurement, type: Types::Plan::MeasurementType, null: true
       field :goal_id, type: String, null: true
       field :completion, type: Float, null: false
     end

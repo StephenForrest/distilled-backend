@@ -2,7 +2,6 @@
 
 module Mutations
   class UpdateSuccessCriteriaMutation < BaseAuthorizedMutation
-    argument :plan_uuid, String, required: true
     argument :goal_id, String, required: true
     argument :success_criteria_id, String, required: true
 
@@ -17,11 +16,10 @@ module Mutations
     field :errors, GraphQL::Types::JSON, null: true
 
     # rubocop:disable Metrics/ParameterLists
-    def resolve(plan_uuid:,
-                goal_id:, success_criteria_id:,
+    def resolve(goal_id:, success_criteria_id:,
                 name:, description:, start_date:, end_date:,
                 tracking_settings:)
-      success_criteria, goal = get_success_criteria_and_goal(plan_uuid:, goal_id:, success_criteria_id:)
+      success_criteria, goal = get_success_criteria_and_goal(goal_id:, success_criteria_id:)
 
       errors = ValidationErrors.new
       SuccessCriteria.transaction do
@@ -43,11 +41,8 @@ module Mutations
 
     private
 
-    def get_success_criteria_and_goal(plan_uuid:, goal_id:, success_criteria_id:)
-      plan = current_workspace.plans.find_by(uuid: plan_uuid)
-      raise GraphQL::ExecutionError, 'No plan found' if plan.blank?
-
-      goal = plan.goals.find(goal_id)
+    def get_success_criteria_and_goal(goal_id:, success_criteria_id:)
+      goal = current_workspace.goals.find(goal_id)
       raise GraphQL::ExecutionError, 'No goal found' if goal.blank?
 
       success_criteria = goal.success_criterias.find(success_criteria_id)

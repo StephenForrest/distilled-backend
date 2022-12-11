@@ -5,8 +5,8 @@
 # Table name: measurements
 #
 #  id                  :bigint           not null, primary key
-#  measurement_type    :integer          default("manual"), not null
 #  tracking_status     :integer          default(0), not null
+#  tracking_type       :integer          default("slack"), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  success_criteria_id :bigint           not null
@@ -19,7 +19,7 @@
 #
 FactoryBot.define do
   factory :measurement do
-    measurement_type { 'manual' }
+    tracking_type { 'manual' }
     success_criteria { create(:success_criteria) }
   end
 end

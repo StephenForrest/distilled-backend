@@ -34,7 +34,7 @@ class Goal < ApplicationRecord
 
   def completion
     items = success_criterias.length
-    completions_sum= success_criterias.map(&:completion).sum
+    completions_sum = success_criterias.map(&:completion).sum
     completions_sum.to_f / items
   end
 

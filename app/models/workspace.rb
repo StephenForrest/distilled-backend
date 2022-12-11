@@ -17,10 +17,15 @@ class Workspace < ApplicationRecord
   has_many :users, through: :workspace_members
 
   has_many :goals, dependent: :destroy
+
   has_many :success_criterias, dependent: :destroy
+
   has_many :actions, dependent: :destroy
   has_many :checklists, dependent: :destroy
   has_many :milestones, dependent: :destroy
+
+  has_many :measurements, dependent: :destroy
+  has_many :measurements_slacks, dependent: :destroy, class_name: 'Measurements::Slack'
 
   has_many :integrations, dependent: :destroy
 

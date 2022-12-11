@@ -20,5 +20,11 @@ module Types
     # actions
     field :update_checklist, mutation: Mutations::Actions::UpdateChecklistMutation
     field :update_milestone, mutation: Mutations::Actions::UpdateMilestoneMutation
+
+    # integrations
+    field :create_integration, mutation: Mutations::CreateIntegrationMutation
+
+    # slack integration
+    field :create_slack_integration, mutation: Mutations::Integrations::Slack::CreateSlackIntegrationMutation
   end
 end

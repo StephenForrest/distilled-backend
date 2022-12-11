@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: integrations
 #
 #  id               :bigint           not null, primary key
-#  integration_type :integer          default(0), not null
+#  integration_type :integer          default("slack"), not null
 #  name             :string           default(""), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
@@ -17,6 +19,5 @@
 #
 FactoryBot.define do
   factory :integration do
-    
   end
 end

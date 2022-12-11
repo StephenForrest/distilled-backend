@@ -62,3 +62,5 @@ gem 'bcrypt', '~> 3.1'
 gem 'graphql', '~> 2.0'
 
 gem 'forgery', '~> 0.8.1'
+
+gem 'httparty', '~> 0.20.0'

@@ -7,8 +7,7 @@ module Mutations
     let(:user) { create(:user_with_workspace) }
     let(:workspace) { user.workspaces.first }
     let(:plan) { create(:plan, user:, workspace:) }
-    let(:goal) { create(:goal, owner_id: user.id, plan:) }
-    let(:plan_id) { plan.uuid }
+    let!(:goal) { create(:goal, owner_id: user.id, plan:, workspace:) }
     let(:goal_id) { goal.to_param }
     let(:name) { 'name' }
     let(:description) { 'description' }
@@ -28,7 +27,7 @@ module Mutations
     describe '.resolve' do
       let(:mutation) do
         <<~GQL
-          mutation($planUuid: String!,
+          mutation(
             $goalId: String!,
             $successCriteriaId: String!
             $name: String!,
@@ -38,7 +37,6 @@ module Mutations
             $trackingSettings: ActionTrackingInput!
           ) {
             updateSuccessCriteria(
-              planUuid: $planUuid,
               goalId: $goalId,
               name: $name,
               description: $description,
@@ -58,7 +56,7 @@ module Mutations
       subject do
         execute_graphql(
           mutation,
-          { planUuid: plan_id, goalId: goal_id, successCriteriaId: success_criteria.to_param,
+          { goalId: goal_id, successCriteriaId: success_criteria.to_param,
             name:, description:, startDate: start_date,
             endDate: end_date, trackingSettings: tracking_settings },
           {

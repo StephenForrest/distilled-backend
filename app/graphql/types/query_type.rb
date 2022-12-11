@@ -7,6 +7,10 @@ module Types
     field :get_plans, resolver: Resolvers::GetPlans
     field :get_goal, resolver: Resolvers::GetGoal
 
+    # integrations
+    field :get_integrations_by_type, resolver: Resolvers::GetIntegrationsByType
+    field :get_integration, resolver: Resolvers::GetIntegration
+
     def current_user
       user = context[:current_user]
       raise GraphQL::ExecutionError, 'Authentication expired' if user.nil?

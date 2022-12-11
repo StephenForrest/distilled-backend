@@ -94,9 +94,14 @@ class SuccessCriteria < ApplicationRecord
   end
 
   def validate_settings(tracking_settings, errors)
-    raise 'Not implemented' unless success_criteria_type.to_sym == :action
-
-    action.validate_settings(tracking_settings, errors)
+    case success_criteria_type.to_s
+    when 'action'
+      action.validate_settings(tracking_settings, errors)
+    when 'measurement'
+      measurement.validate_settings(tracking_settings, errors)
+    else
+      raise 'Not implemented'
+    end
   end
 
   def update_settings!(tracking_settings)

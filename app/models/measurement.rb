@@ -5,8 +5,8 @@
 # Table name: measurements
 #
 #  id                  :bigint           not null, primary key
-#  measurement_type    :integer          default("manual"), not null
 #  tracking_status     :integer          default(0), not null
+#  tracking_type       :integer          default("slack"), not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  success_criteria_id :bigint           not null
@@ -19,8 +19,42 @@
 #
 class Measurement < ApplicationRecord
   belongs_to :success_criteria
+  has_many :measurements_slacks, dependent: :destroy, class_name: 'Measurements::Slack'
 
-  enum :measurement_type, {
-    manual: 0
+  belongs_to :workspace
+
+  enum :tracking_type, {
+    slack: 0,
+    manual: 1
   }
+
+  def tracking_class
+    case tracking_type.to_sym
+    when :slack
+      Measurements::Slack
+    else
+      raise 'Invalid tracking type'
+    end
+  end
+
+  def validate_settings(tracking_settings, errors)
+    validation_errors = tracking_class.validate_settings(self, tracking_settings)
+    return if validation_errors.blank?
+
+    errors.add('tracking_settings', validation_errors)
+  end
+
+  def tracking
+    tracking_class.where(measurement: self).first
+  end
+
+  delegate :completion, to: :tracking
+
+  def create_settings!(tracking_settings)
+    tracking_class.on_create!(measurement: self, settings: tracking_settings.as_json)
+  end
+
+  def update_settings!(tracking_settings)
+    tracking.update!(settings: tracking_settings.as_json)
+  end
 end
