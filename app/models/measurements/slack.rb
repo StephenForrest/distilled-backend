@@ -60,7 +60,7 @@ module Measurements
       settings = tracking_settings[:slack]
       if settings[:integration_id].blank? || Integration.find(settings[:integration_id]).blank?
         errors.add('integration_id',
-                   'Choose an integration')
+                   'You need to connect to a slack integration')
       end
       errors.add('metric', 'Required field') if settings[:metric].blank?
       errors.add('value', 'Required field') if settings[:value].blank?
