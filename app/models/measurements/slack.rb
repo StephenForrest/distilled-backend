@@ -5,7 +5,8 @@
 # Table name: measurements_slack
 #
 #  id                    :bigint           not null, primary key
-#  metric                :integer          default(0), not null
+#  metric                :integer          default("new_users"), not null
+#  metric_value          :integer          default(0), not null
 #  value                 :integer          default(0), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
@@ -38,11 +39,23 @@ module Measurements
     }
 
     def completion
-      0.23
+      metric_value / value.to_f
+    end
+
+    def increment_by(increment_value)
+      update!(metric_value: metric_value + increment_value)
     end
 
     def integration_id
       integrations_slack_id
+    end
+
+    def on_update!(settings:)
+      update!(
+        measurement:,
+        metric: settings['slack']['metric'],
+        value: settings['slack']['value']
+      )
     end
 
     def self.on_create!(measurement:, settings:)

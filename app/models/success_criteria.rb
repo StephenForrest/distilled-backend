@@ -104,11 +104,7 @@ class SuccessCriteria < ApplicationRecord
     end
   end
 
-  def update_settings!(tracking_settings)
-    return unless success_criteria_type.to_sym == :action
-
-    action.update_settings!(tracking_settings)
-  end
+  delegate :update_settings!, to: :settings_object
 
   def create_action!(tracking_settings, tracking_type)
     action = actions.create!(

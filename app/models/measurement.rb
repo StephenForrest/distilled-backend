@@ -55,6 +55,6 @@ class Measurement < ApplicationRecord
   end
 
   def update_settings!(tracking_settings)
-    tracking.update!(settings: tracking_settings.as_json)
+    tracking.on_update!(settings: tracking_settings.as_json)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_11_120110) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_12_132259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_120110) do
     t.index ["workspace_id"], name: "index_integrations_slack_on_workspace_id"
   end
 
+  create_table "measurement_slack_action_logs", force: :cascade do |t|
+    t.bigint "measurements_slacks_id", null: false
+    t.integer "metric", default: 0, null: false
+    t.integer "value", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["measurements_slacks_id"], name: "index_measurement_slack_action_logs_on_measurements_slacks_id"
+  end
+
   create_table "measurements", force: :cascade do |t|
     t.bigint "success_criteria_id", null: false
     t.integer "tracking_type", default: 0, null: false
@@ -100,6 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_120110) do
     t.datetime "updated_at", null: false
     t.integer "value", default: 0, null: false
     t.integer "metric", default: 0, null: false
+    t.integer "metric_value", default: 0, null: false
     t.index ["integrations_slack_id"], name: "index_measurements_slack_on_integrations_slack_id"
     t.index ["measurement_id"], name: "index_measurements_slack_on_measurement_id"
     t.index ["workspace_id"], name: "index_measurements_slack_on_workspace_id"
@@ -124,6 +134,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_120110) do
     t.string "uuid", default: "", null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
     t.index ["workspace_id"], name: "index_plans_on_workspace_id"
+  end
+
+  create_table "slack_events", force: :cascade do |t|
+    t.string "event_id", null: false
+    t.string "team_id", null: false
+    t.json "event", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "tracked", default: false, null: false
+    t.index ["event_id"], name: "index_slack_events_on_event_id"
+    t.index ["team_id"], name: "index_slack_events_on_team_id"
   end
 
   create_table "success_criterias", force: :cascade do |t|

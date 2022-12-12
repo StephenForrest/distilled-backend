@@ -14,6 +14,7 @@ module Types
       field :measurement, type: Types::Plan::MeasurementType, null: true
       field :goal_id, type: String, null: true
       field :completion, type: Float, null: false
+      field :created_at, type: String, null: true
     end
   end
 end

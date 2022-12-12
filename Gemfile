@@ -64,3 +64,5 @@ gem 'graphql', '~> 2.0'
 gem 'forgery', '~> 0.8.1'
 
 gem 'httparty', '~> 0.20.0'
+
+gem "whenever", "~> 1.0"
