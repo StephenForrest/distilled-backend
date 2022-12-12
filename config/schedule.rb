@@ -17,7 +17,7 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-every 5.mins do
+every 5.minutes do
   runner 'SlackEvent.aggregate_slack_events'
 end
 
