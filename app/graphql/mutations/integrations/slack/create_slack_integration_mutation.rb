@@ -25,9 +25,9 @@ module Mutations
           token = res['access_token']
           scopes = res['scope']
 
-          existing_slack_integration = ::Integrations::Slack.find_by(team_id:)
+          existing_slack_integration = ::Integrations::Slack.find_by(team_id:, workspace: current_workspace)
           if existing_slack_integration.present?
-            existing_slack_integration.update!(team_name:, token:, scope: scopes)
+            existing_slack_integration.update!(team_name:, token:, scopes:)
             existing_slack_integration.integration
           else
             integration = current_user.integrations.create!(name: team_name, integration_type: 'slack',
