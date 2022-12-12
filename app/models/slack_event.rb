@@ -44,10 +44,10 @@ class SlackEvent < ApplicationRecord
   def self.qualify_event_for_slack_integration(event, slack_integration, measurement_increments)
     integration = slack_integration.integration
     measurements = Measurements::Slack.where(integrations_slack_id: integration.id)
-    measurements.each do |s_measurement|
+    measurements.each do |s_measurement, i|
       success_criteria = s_measurement.measurement.success_criteria
-      next if add_event_to_measurement(s_measurement, event)
-      next if success_criteria.start_date <= event.created_at && success_criteria.end_date >= event.created_at
+      next unless add_event_to_measurement(s_measurement, event)
+      next unless success_criteria.start_date <= event.created_at && success_criteria.end_date >= event.created_at
 
       increment_measurement(measurement_increments, s_measurement)
     end
