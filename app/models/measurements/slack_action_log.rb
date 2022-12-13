@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: measurement_slack_action_logs
@@ -13,5 +15,14 @@
 #
 #  index_measurement_slack_action_logs_on_measurements_slacks_id  (measurements_slacks_id)
 #
-class MeasurementSlackActionLog < ApplicationRecord
+
+module Measurements
+  class SlackActionLog < ApplicationRecord
+    belongs_to :measurements_slack,
+               class_name: 'Measurements::Slack',
+               foreign_key: 'measurements_slacks_id',
+               inverse_of: :measurement_slack_action_logs
+
+    self.table_name = 'measurement_slack_action_logs'
+  end
 end

@@ -11,6 +11,9 @@ module Types
     field :get_integrations_by_type, resolver: Resolvers::GetIntegrationsByType
     field :get_integration, resolver: Resolvers::GetIntegration
 
+    # measurements
+    field :get_slack_action_logs, resolver: Resolvers::GetSlackActionLogs
+
     def current_user
       user = context[:current_user]
       raise GraphQL::ExecutionError, 'Authentication expired' if user.nil?

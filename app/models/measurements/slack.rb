@@ -24,6 +24,10 @@ module Measurements
   class Slack < ApplicationRecord
     belongs_to :workspace
     belongs_to :measurement
+    has_many :measurement_slack_action_logs,
+             dependent: :destroy, foreign_key: 'measurements_slacks_id',
+             class_name: 'Measurements::SlackActionLog',
+             inverse_of: :measurements_slack
 
     self.table_name = 'measurements_slack'
 
@@ -43,7 +47,14 @@ module Measurements
     end
 
     def increment_by(increment_value)
-      update!(metric_value: metric_value + increment_value)
+      Slack.transaction do
+        new_value = metric_value + increment_value
+        update!(metric_value: new_value)
+        measurement_slack_action_logs.create!(
+          metric:,
+          value: new_value
+        )
+      end
     end
 
     def integration_id
