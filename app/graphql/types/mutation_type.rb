@@ -7,6 +7,16 @@ module Types
     field :sign_out, mutation: Mutations::SignOutMutation
     field :sign_up, mutation: Mutations::SignUpMutation
 
+    # User
+    field :update_user, mutation: Mutations::UpdateUserMutation
+
+    # Workspace
+    field :update_workspace, mutation: Mutations::UpdateWorkspaceMutation
+
+    # Workspace member
+    field :create_workspace_member, mutation: Mutations::CreateWorkspaceMemberMutation
+    field :delete_workspace_member, mutation: Mutations::DeleteWorkspaceMemberMutation
+
     # Plans
     field :create_plan, mutation: Mutations::CreatePlanMutation
 

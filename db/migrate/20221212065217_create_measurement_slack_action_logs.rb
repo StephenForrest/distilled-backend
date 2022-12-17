@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMeasurementSlackActionLogs < ActiveRecord::Migration[7.0]
   def change
     create_table :measurement_slack_action_logs do |t|

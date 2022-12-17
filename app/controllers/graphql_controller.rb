@@ -30,6 +30,10 @@ class GraphqlController < ApplicationController
     header.gsub(pattern, '') if header&.match(pattern)
   end
 
+  def parse_workspace_id
+    request.headers['activeWorkspaceId']
+  end
+
   def current_user
     @current_user ||= begin
       session_id = parse_session_id
@@ -45,8 +49,9 @@ class GraphqlController < ApplicationController
   def current_workspace
     @current_workspace ||= begin
       return nil if current_user.blank?
+      return nil if parse_workspace_id.blank? || parse_workspace_id == 'null'
 
-      current_user.workspaces.first
+      current_user.workspaces.find(parse_workspace_id)
     end
   end
 

@@ -10,7 +10,7 @@ module Mutations
 
     def resolve(email:, password:, name:)
       user = User.find_by(email:)
-      raise GraphQL::ExecutionError, 'User already exists' if user.present?
+      raise GraphQL::ExecutionError, 'User already exists' if user.present? && user.invite_status == 'joined'
 
       new_user = User.signup(email:, password:, name:)
       UserSession.login(email: new_user.email, password:)

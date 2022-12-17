@@ -4,11 +4,15 @@
 #
 # Table name: workspaces
 #
-#  id           :bigint           not null, primary key
-#  auto_created :boolean          default(TRUE), not null
-#  title        :string(255)      not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  id                    :bigint           not null, primary key
+#  auto_created          :boolean          default(TRUE), not null
+#  auto_join_from_domain :boolean          default(FALSE), not null
+#  boolean               :boolean          default(FALSE), not null
+#  domain                :string
+#  string                :string
+#  title                 :string(255)      not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
 #
 class Workspace < ApplicationRecord
   has_many :workspace_members, dependent: :destroy
@@ -35,5 +39,9 @@ class Workspace < ApplicationRecord
     )
     workspace.workspace_members.create!(user:, role: 'admin')
     workspace
+  end
+
+  def public_domain?
+    ['gmail', 'outlook', 'yahoo', 'hey.com'].any? { |d| domain&.include? d }
   end
 end

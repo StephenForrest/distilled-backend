@@ -7,6 +7,9 @@ module Types
     field :get_plans, resolver: Resolvers::GetPlans
     field :get_goal, resolver: Resolvers::GetGoal
 
+    # workspace details
+    field :get_workspace_details, resolver: Resolvers::GetWorkspaceDetails
+
     # integrations
     field :get_integrations_by_type, resolver: Resolvers::GetIntegrationsByType
     field :get_integration, resolver: Resolvers::GetIntegration

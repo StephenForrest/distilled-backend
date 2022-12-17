@@ -9,6 +9,8 @@ module Types
       field :goals, type: [Types::Plan::GoalType], null: true
       field :goals_count, type: Integer, null: true
       field :recent_goals, type: [Types::Plan::GoalType], null: true
+      field :measurements_count, type: Integer, null: true
+      field :actions_count, type: Integer, null: true
 
       def id
         object.uuid

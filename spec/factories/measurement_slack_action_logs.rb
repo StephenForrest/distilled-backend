@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: measurement_slack_action_logs
@@ -15,6 +17,5 @@
 #
 FactoryBot.define do
   factory :measurement_slack_action_log do
-    
   end
 end
