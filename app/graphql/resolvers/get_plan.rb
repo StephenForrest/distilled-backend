@@ -7,7 +7,7 @@ module Resolvers
     argument :uuid, String, required: true
 
     def resolve(uuid: nil)
-      context[:current_user].plans.find_by(uuid:)
+      current_workspace.plans.find_by(uuid:)
     end
   end
 end

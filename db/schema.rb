@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_17_131812) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_18_171710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -163,12 +163,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_131812) do
     t.index ["workspace_id"], name: "index_success_criterias_on_workspace_id"
   end
 
+  create_table "user_email_verifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "token", null: false
+    t.boolean "expired", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_email_verifications_on_user_id"
+  end
+
   create_table "user_sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "session_id", null: false
     t.boolean "expired", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "login_type", default: 0, null: false
     t.index ["user_id", "session_id"], name: "index_user_session", unique: true
     t.index ["user_id"], name: "index_user_sessions_on_user_id"
   end
@@ -176,11 +186,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_131812) do
   create_table "users", force: :cascade do |t|
     t.string "email", limit: 255, null: false
     t.string "name", limit: 255, null: false
-    t.string "password_encrypted", limit: 255, null: false
+    t.string "password_encrypted", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "email_verified", default: false
     t.integer "invite_status", default: 0
+    t.string "profile_pic", default: "f"
     t.index ["email"], name: "index_users_on_email"
   end
 

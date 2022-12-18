@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.configure do
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -68,4 +68,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
+
+  config.web_app_url = 'http://localhost:3000'
+  config.web_api_url = 'http://localhost:3123'
 end

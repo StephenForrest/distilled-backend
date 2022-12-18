@@ -17,6 +17,7 @@ module Mutations
       workspace_member = current_workspace.workspace_members.create!(
         user:
       )
+      UserMailer.with(user:, added_by: current_user, workspace: current_workspace).invite_to_workspace.deliver_later
       { workspace_member: }
     end
 

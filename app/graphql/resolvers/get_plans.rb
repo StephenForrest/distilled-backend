@@ -6,7 +6,7 @@ module Resolvers
     type [Types::Plan::PlanType], null: false
 
     def resolve
-      current_user.plans.where(workspace: current_workspace)
+      current_workspace.plans
     end
   end
 end

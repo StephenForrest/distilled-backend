@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   post '/slack-event', to: 'slack#event'
+  get '/oauth-google', to: 'google_auth#auth'
 end

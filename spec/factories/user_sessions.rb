@@ -6,6 +6,7 @@
 #
 #  id         :bigint           not null, primary key
 #  expired    :boolean          default(TRUE), not null
+#  login_type :integer          default("email"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  session_id :string           not null

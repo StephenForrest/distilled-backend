@@ -6,11 +6,13 @@ module Types
     field :create_auth, mutation: Mutations::CreateAuthMutation
     field :sign_out, mutation: Mutations::SignOutMutation
     field :sign_up, mutation: Mutations::SignUpMutation
+    field :verify_email, mutation: Mutations::VerifyEmailMutation
 
     # User
     field :update_user, mutation: Mutations::UpdateUserMutation
 
     # Workspace
+    field :create_workspace, mutation: Mutations::CreateWorkspaceMutation
     field :update_workspace, mutation: Mutations::UpdateWorkspaceMutation
 
     # Workspace member

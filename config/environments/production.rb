@@ -2,7 +2,7 @@
 
 require 'active_support/core_ext/integer/time'
 
-Rails.application.configure do
+Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
@@ -96,7 +96,10 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     user_name: 'info@getdistilled.io',
-    password: 'dpcopaocrmehfgbp',
+    password: Rails.application.credentials.config[:smtp_password],
     authentication: 'plain'
   }
+
+  config.web_app_url = 'https://app.getdistilled.io'
+  config.web_api_url = 'https://api.getdistilled.io'
 end

@@ -6,6 +6,7 @@
 #
 #  id         :bigint           not null, primary key
 #  expired    :boolean          default(TRUE), not null
+#  login_type :integer          default("email"), not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  session_id :string           not null
@@ -21,6 +22,11 @@ class UserSession < ApplicationRecord
 
   scope :active, -> { where(expired: false) }
 
+  enum login_type: {
+    email: 0,
+    google: 1
+  }
+
   def expire!
     update!(expired: true)
   end
@@ -30,11 +36,11 @@ class UserSession < ApplicationRecord
     password_hash = BCrypt::Engine.hash_secret(password, Rails.application.credentials.config[:password_salt])
     raise ::Errors::InvalidCredentials if user.nil? || user.password_encrypted != password_hash
 
-    UserSession.generate_user_session(user:)
+    UserSession.generate_user_session(user:, login_type: 'email')
   end
 
-  def self.generate_user_session(user:)
+  def self.generate_user_session(user:, login_type:)
     session_id = SecureRandom.hex(64)
-    create!(session_id:, user:, expired: false)
+    create!(session_id:, user:, expired: false, login_type:)
   end
 end

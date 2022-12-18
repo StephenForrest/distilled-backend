@@ -3,7 +3,7 @@
 module Mutations
   class BaseAuthorizedMutation < BaseMutation
     def self.authorized?(object, context)
-      super && context[:current_user].present?
+      super && context[:current_user].present? && context[:current_user].email_verified
     end
 
     def current_user

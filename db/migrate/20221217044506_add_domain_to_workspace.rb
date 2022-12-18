@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDomainToWorkspace < ActiveRecord::Migration[7.0]
   def change
     change_table :workspaces, bulk: true do |t|

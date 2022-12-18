@@ -7,7 +7,7 @@ module Resolvers
     argument :id, String, required: true
 
     def resolve(id: nil)
-      context[:current_user].goals.find(id)
+      current_workspace.goals.find(id)
     end
   end
 end

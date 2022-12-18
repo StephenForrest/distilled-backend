@@ -11,6 +11,15 @@ class UserMailer < ApplicationMailer
 
   def verify_email
     @user = params[:user]
+    @token = params[:token]
     mail(to: @user.email, subject: 'Welcome to Distilled')
+  end
+
+  def invite_to_workspace
+    @user = params[:user]
+    @workspace = params[:workspace]
+    @added_by = params[:added_by]
+    mail(to: @user.email,
+         subject: "You have been invited to join #{@workspace.title} by #{@added_by.name.split(' ')[0]}")
   end
 end
