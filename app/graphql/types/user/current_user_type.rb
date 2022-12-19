@@ -7,6 +7,7 @@ module Types
       field :email, type: String, null: false
       field :name, type: String, null: true
       field :email_verified, type: Boolean, null: false
+      field :profile_pic, type: String, null: true
       field :workspaces, type: [Types::Workspace::WorkspaceType], null: false
     end
   end
