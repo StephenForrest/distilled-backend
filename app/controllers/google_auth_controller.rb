@@ -17,7 +17,7 @@ class GoogleAuthController < ApplicationController
       client_id: Rails.application.credentials.config[:google_client_id],
       client_secret: Rails.application.credentials.config[:google_client_secret],
       grant_type: 'authorization_code',
-      redirect_uri: 'http://localhost:3123/oauth-google'
+      redirect_uri: "#{Rails.configuration.web_api_url}/oauth-google"
     }.to_json, headers: { 'Content-Type' => 'application/json' })
   end
 
