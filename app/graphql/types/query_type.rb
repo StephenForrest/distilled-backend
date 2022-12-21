@@ -12,7 +12,11 @@ module Types
 
     # integrations
     field :get_integrations_by_type, resolver: Resolvers::GetIntegrationsByType
+    field :get_all_integrations, resolver: Resolvers::GetAllIntegrations
     field :get_integration, resolver: Resolvers::GetIntegration
+
+    # acitons
+    field :get_action_success_criterias, resolver: Resolvers::GetActionSuccessCriterias
 
     # measurements
     field :get_slack_action_logs, resolver: Resolvers::GetSlackActionLogs

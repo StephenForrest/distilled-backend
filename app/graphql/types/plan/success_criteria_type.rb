@@ -15,6 +15,11 @@ module Types
       field :goal_id, type: String, null: true
       field :completion, type: Float, null: false
       field :created_at, type: String, null: true
+      field :kanban_category, type: String, null: true
+
+      def kanban_category
+        %i[todo ongoing done].sample
+      end
     end
   end
 end
