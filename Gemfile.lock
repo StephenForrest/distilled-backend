@@ -218,6 +218,11 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
     ruby-progressbar (1.11.0)
+    sentry-rails (5.7.0)
+      railties (>= 5.0)
+      sentry-ruby (~> 5.7.0)
+    sentry-ruby (5.7.0)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
     thor (1.2.1)
     timeout (0.3.0)
     tzinfo (2.0.5)
@@ -252,6 +257,8 @@ DEPENDENCIES
   rails (~> 7.0.4)
   rspec-rails (~> 5.1)
   rubocop-rails (~> 2.15)
+  sentry-rails (~> 5.7)
+  sentry-ruby (~> 5.7)
   tzinfo-data
   whenever (~> 1.0)
 

@@ -67,3 +67,7 @@ gem 'forgery', '~> 0.8.1'
 gem 'httparty', '~> 0.20.0'
 
 gem 'whenever', '~> 1.0'
+
+gem 'sentry-ruby', '~> 5.7'
+
+gem 'sentry-rails', '~> 5.7'

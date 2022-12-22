@@ -15,7 +15,7 @@ module Mutations
 
       user_verification.user.update!(email_verified: true)
       success = user_verification.update!(expired: true)
-      { success:}
+      { success: }
     end
   end
 end
