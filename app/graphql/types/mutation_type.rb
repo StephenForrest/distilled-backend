@@ -26,6 +26,8 @@ module Types
 
     # Goals
     field :create_goal, mutation: Mutations::CreateGoalMutation
+    field :delete_goal, mutation: Mutations::DeleteGoalMutation
+    field :update_goal, mutation: Mutations::UpdateGoalMutation
 
     # success criteria
     field :create_success_criteria, mutation: Mutations::CreateSuccessCriteriaMutation
