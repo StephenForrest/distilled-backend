@@ -21,6 +21,8 @@ module Types
 
     # Plans
     field :create_plan, mutation: Mutations::CreatePlanMutation
+    field :update_plan, mutation: Mutations::UpdatePlanMutation
+    field :delete_plan, mutation: Mutations::DeletePlanMutation
 
     # Goals
     field :create_goal, mutation: Mutations::CreateGoalMutation

@@ -44,6 +44,16 @@ class User < ApplicationRecord
     end
   end
 
+  def self.signup_google(email:, name:)
+    User.transaction do
+      new_user = User.find_by(email:) || User.new(email:)
+      new_user.update!(name:)
+      new_user.create_or_add_to_workspace
+      new_user.create_verification_email
+      new_user
+    end
+  end
+
   def create_or_add_to_workspace
     return if workspaces.present?
 
