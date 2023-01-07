@@ -2,7 +2,7 @@
 
 # Distilled API - Introduction
 
-Welcome to the Distilled API documentation. The Distilled API is a Ruby GraphQL API that supports the Distilled platform. This API allows you to interact with the platform and perform various tasks, such as creating and managing users and projects. Use the documentation below to learn more about the available API methods and how to use them.
+Welcome to the Distilled API documentation. Our backend is a Ruby GraphQL API that supports the Distilled platform. This API allows you to interact with the platform and perform various tasks, such as creating and managing users and projects. Use the documentation below to learn more about the available API methods and how to use them.
 
 ## Getting Started
 
