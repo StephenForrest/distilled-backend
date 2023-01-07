@@ -48,6 +48,11 @@ class SlackEvent < ApplicationRecord
       success_criteria = s_measurement.measurement.success_criteria
       next unless add_event_to_measurement(s_measurement, event)
       next unless success_criteria.start_date <= event.created_at && success_criteria.end_date >= event.created_at
+      if add_event_to_measurement(s_measurement, event) && success_criteria.start_date <= event.created_at && success_criteria.end_date >= event.created_at
+        s_measurement.increment!(:count)
+        event.update!(tracked: true)
+        Pusher.trigger('slack-events', 'measurement', { message: 'A new Slack event has been added to a measurement' })
+      end
 
       increment_measurement(measurement_increments, s_measurement)
     end

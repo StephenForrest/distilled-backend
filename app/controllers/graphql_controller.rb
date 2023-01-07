@@ -15,6 +15,14 @@ class GraphqlController < ApplicationController
       current_workspace:
     }
     result = ApiGetdistilledIoSchema.execute(query, variables:, context:, operation_name:)
+
+      # => For subscriptions, return the subscription_id as a header  <=
+    # Also ensure that the data payload is never null as this breaks some clients
+    if result.subscription?
+      response.headers['X-Subscription-Channel'] = result.context[:subscription_id]
+      result[:data] ||= {}
+    end
+    
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?

@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require 'graphql'
+require_relative 'types/query_type'
+require_relative 'types/mutation_type'
+
+
 class ApiGetdistilledIoSchema < GraphQL::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)

@@ -36,6 +36,7 @@ class Measurement < ApplicationRecord
       raise 'Invalid tracking type'
     end
   end
+  
 
   def validate_settings(tracking_settings, errors)
     validation_errors = tracking_class.validate_settings(self, tracking_settings)
