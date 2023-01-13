@@ -29,6 +29,9 @@ module Measurements
              class_name: 'Measurements::SlackActionLog',
              inverse_of: :measurements_slack
 
+    has_and_belongs_to_many :slack_channels, association_foreign_key: 'slack_channel_id',
+    foreign_key: 'measurements_slack_id'
+
     self.table_name = 'measurements_slack'
 
     enum metric: {
@@ -62,21 +65,30 @@ module Measurements
     end
 
     def on_update!(settings:)
-      update!(
-        measurement:,
-        metric: settings['slack']['metric'],
-        value: settings['slack']['value']
-      )
+      ActiveRecord::Base.transaction do
+        slack_channels.delete_all
+        update!(
+          measurement:,
+          metric: settings['slack']['metric'],
+          value: settings['slack']['value']
+        )
+
+        Measurements::Slack.create_slack_channels!(self, settings['slack']['channel_filters'])
+      end
     end
 
     def self.on_create!(measurement:, settings:)
-      create!(
-        measurement:,
-        workspace_id: measurement.workspace.id,
-        integrations_slack_id: settings['slack']['integration_id'],
-        metric: settings['slack']['metric'],
-        value: settings['slack']['value']
-      )
+      ActiveRecord::Base.transaction do
+        measurement_slack = create!(
+          measurement:,
+          workspace_id: measurement.workspace.id,
+          integrations_slack_id: settings['slack']['integration_id'],
+          metric: settings['slack']['metric'],
+          value: settings['slack']['value']
+        )
+
+        create_slack_channels!(measurement_slack, settings['slack']['channel_filters'])
+      end
     end
 
     def self.validate_settings(_measurement, tracking_settings)
@@ -90,6 +102,18 @@ module Measurements
       errors.add('value', 'Required field') if settings[:value].blank?
 
       errors
+    end
+
+    def self.create_slack_channels!(measurement_slack, channels)
+      slack_team_id = Integrations::Slack.find_by(integration_id: measurement_slack.integration_id).team_id
+
+      channels.each do |channel|
+        slack_channel = SlackChannel
+                        .find_or_create_by!(slack_team_id:, slack_channel_id: channel['slack_channel_id']) do |ch|
+          ch.name = channel['name']
+        end
+        measurement_slack.slack_channels << slack_channel
+      end
     end
   end
 end

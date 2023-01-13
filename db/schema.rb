@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_18_171710) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_12_143002) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "actions", force: :cascade do |t|
@@ -115,6 +116,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_171710) do
     t.index ["workspace_id"], name: "index_measurements_slack_on_workspace_id"
   end
 
+  create_table "measurements_slack_slack_channels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "measurements_slack_id", null: false
+    t.uuid "slack_channel_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["measurements_slack_id"], name: "index_mea_sl_sl_channels_on_measurements_slack_id"
+    t.index ["slack_channel_id"], name: "index_measurements_slack_slack_channels_on_slack_channel_id"
+  end
+
   create_table "milestones", force: :cascade do |t|
     t.bigint "workspace_id", null: false
     t.bigint "action_id", null: false
@@ -134,6 +144,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_171710) do
     t.string "uuid", default: "", null: false
     t.index ["user_id"], name: "index_plans_on_user_id"
     t.index ["workspace_id"], name: "index_plans_on_workspace_id"
+  end
+
+  create_table "slack_channels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "slack_channel_id"
+    t.string "slack_team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slack_team_id", "slack_channel_id"], name: "index_slack_channels_on_slack_team_id_and_slack_channel_id", unique: true
   end
 
   create_table "slack_events", force: :cascade do |t|
@@ -216,4 +235,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_18_171710) do
     t.boolean "boolean", default: false, null: false
   end
 
+  add_foreign_key "measurements_slack_slack_channels", "measurements_slack"
+  add_foreign_key "measurements_slack_slack_channels", "slack_channels"
 end

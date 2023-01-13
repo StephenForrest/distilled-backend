@@ -8,6 +8,11 @@ module Types
         field :integration_id, String, null: false
         field :metric, String, null: false
         field :value, Int, null: false
+        field :channel_filters, type: [SlackChannelType], null: true
+
+        def channel_filters
+          object.slack_channels
+        end
       end
     end
   end

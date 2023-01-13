@@ -29,6 +29,8 @@ module Integrations
     self.table_name = 'integrations_slack'
 
     def self.fetch_token(code:, client_id:, client_secret:)
+      # TODO (atanych): maybe we need to pass redirect_uri as well. At least it does not work on my localhost
+      # HTTParty.post("#{SLACK_BASE_API}/oauth.v2.access", body: { code:, client_id:, client_secret:, redirect_uri: 'https://atanych1.ngrok.io/oauth-slack' })
       HTTParty.post("#{SLACK_BASE_API}/oauth.v2.access", body: { code:, client_id:, client_secret: })
     end
 
