@@ -22,7 +22,13 @@ class SlackController < ApplicationController
           Measurements::SlackActionLog.create(measurements_slacks_id: slack.id, metric: slack.metric, value: 1)
 
           slack.increment!(:metric_value)
-          # TODO: send data on FE
+
+          payload = {
+            id: slack.measurement.success_criteria_id,
+            completion: slack.completion
+          }
+
+          ::WebSockets::Publish.call(slack.workspace_id, :success_criteria_updated, payload)
         end
       end
     else
