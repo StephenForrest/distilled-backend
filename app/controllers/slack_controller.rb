@@ -13,6 +13,9 @@ class SlackController < ApplicationController
   end
 
   def webhooks
+    if params[:type] == 'url_verification'
+      return render json: {challenge: params[:challenge]}
+    end
     case params[:event][:type]
     when 'message'
       channel = SlackChannel.find_by(slack_team_id: params[:event][:team], slack_channel_id: params[:event][:channel])
