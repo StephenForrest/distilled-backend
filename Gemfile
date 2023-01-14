@@ -77,3 +77,5 @@ gem 'whenever', '~> 1.0'
 gem 'sentry-ruby', '~> 5.7'
 
 gem 'sentry-rails', '~> 5.7'
+
+gem "sidekiq", "~> 7.0"
