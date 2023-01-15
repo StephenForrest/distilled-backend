@@ -1,33 +1,41 @@
-require 'segment/analytics'
+Analytics = Segment::Analytics.new({
+    write_key: 'SEGMENT_WRITE_KEY',
+    on_error: Proc.new { |status, msg| print msg }
+})
 
-module Analytics
-    class Tracking # Rubocop:disable Metrics/ClassLength
-        
-        def initialize(context = {})
-            @user = context[:user]
-            @event = context[:event]
-            @segment = Segment::Analytics.new(
-                write_key: ENV.fetch('SEGMENT_WRITE_KEY'),
-            )
-        end
-        def call
-            @segment.track(
-                user_id: @user.id,
-                event: @event,
-                properties: properties,
-            )
-            @segment.identify(
-                user_id: @user.id,
-                traits: properties,
-            )
-        end
-        private def properties
-            {
-                email: @user.email,
-                name: @user.name,
-                created_at: @user.created_at,
-                updated_at: @user.updated_at,
-            }
-        end         
-    end
-end
+Analytics.identify(
+    user_id: current_user.id,
+    traits: {
+      name: current_user.name,
+      email: current_user.email,
+      created_at: current_user.created_at,
+      profile_pic: current_user.profile_pic
+    })
+
+Analytics.group(
+    user_id: current_user.id,
+    group_id: current_user.workspaces.first.id,
+    traits: {
+        name: current_user.workspaces.first.name,
+        created_at: current_user.workspaces.first.created_at
+    })
+
+Analytics.track(
+    user_id: current_user.id,
+    event: user_sessions.first.login_type,
+    properties: {
+        name: current_user.name,
+        email: current_user.email,
+        created_at: current_user.created_at,
+        profile_pic: current_user.profile_pic
+    })
+
+Analytics.track(
+    user_id: current_user.id,
+    event: user_sessions.SignOutMutation.session_id,
+    properties: {
+        name: current_user.name,
+        email: current_user.email,
+        created_at: current_user.created_at,
+        profile_pic: current_user.profile_pic
+    })
