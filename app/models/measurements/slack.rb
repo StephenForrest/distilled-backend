@@ -24,6 +24,7 @@ module Measurements
   class Slack < ApplicationRecord
     belongs_to :workspace
     belongs_to :measurement
+    belongs_to :integration_slack, class_name: 'Integrations::Slack', foreign_key: 'integrations_slack_id'
     has_many :measurement_slack_action_logs,
              dependent: :destroy, foreign_key: 'measurements_slacks_id',
              class_name: 'Measurements::SlackActionLog',
@@ -51,11 +52,12 @@ module Measurements
 
     def increment_by(increment_value)
       Slack.transaction do
+        lock!
         new_value = metric_value + increment_value
         update!(metric_value: new_value)
         measurement_slack_action_logs.create!(
           metric:,
-          value: new_value
+          value: increment_value
         )
       end
     end
@@ -87,7 +89,13 @@ module Measurements
           value: settings['slack']['value']
         )
 
-        create_slack_channels!(measurement_slack, settings['slack']['channel_filters'])
+        measurement_slack = create_slack_channels!(measurement_slack, settings['slack']['channel_filters'])
+
+        if measurement_slack.all_messages?
+          measurement_slack.slack_channels.each do |channel|
+            ::Slack::FetchOldMessagesJob.perform_later(channel, measurement_slack)
+          end
+        end
       end
     end
 
@@ -114,6 +122,7 @@ module Measurements
         end
         measurement_slack.slack_channels << slack_channel
       end
+      measurement_slack
     end
   end
 end

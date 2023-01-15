@@ -51,13 +51,12 @@ module Integrations
       )
     end
 
-    private
-
     def slack_get_request(endpoint, options)
       HTTParty.get("#{SLACK_BASE_API}/#{endpoint}",
                    { query: options, headers: { 'Authorization' => "Bearer #{token}" } })
     end
 
+    private
     def fetch_paginated_conversations(cursor: nil, channels: [], options: {})
       options[:cursor] = cursor if cursor.present?
       res = slack_get_request('conversations.list', options)

@@ -21,10 +21,8 @@ class SlackController < ApplicationController
       channel = SlackChannel.find_by(slack_team_id: params[:event][:team], slack_channel_id: params[:event][:channel])
       if channel
         channel.measurement_slacks.each do |slack|
-          next unless slack.metric == 'new_messages'
-          Measurements::SlackActionLog.create(measurements_slacks_id: slack.id, metric: slack.metric, value: 1)
-
-          slack.increment!(:metric_value)
+          next if !slack.new_messages? && !slack.all_messages?
+          slack.increment_by(1)
 
           payload = {
             id: slack.measurement.success_criteria_id,
