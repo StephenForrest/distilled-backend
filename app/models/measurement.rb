@@ -5,6 +5,7 @@
 # Table name: measurements
 #
 #  id                  :bigint           not null, primary key
+#  code                :string
 #  tracking_status     :integer          default(0), not null
 #  tracking_type       :integer          default("slack"), not null
 #  created_at          :datetime         not null
@@ -25,12 +26,16 @@ class Measurement < ApplicationRecord
 
   enum :tracking_type, {
     slack: 0,
-    manual: 1
+    manual: 1,
+    zapier: 2
   }
 
   def tracking_class
     case tracking_type.to_sym
     when :slack
+      Measurements::Slack
+    # TODO (atanych): Looks like we can unifity measurements
+    when :zapier
       Measurements::Slack
     else
       raise 'Invalid tracking type'

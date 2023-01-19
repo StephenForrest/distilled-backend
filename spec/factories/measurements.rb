@@ -5,6 +5,7 @@
 # Table name: measurements
 #
 #  id                  :bigint           not null, primary key
+#  code                :string
 #  tracking_status     :integer          default(0), not null
 #  tracking_type       :integer          default("slack"), not null
 #  created_at          :datetime         not null

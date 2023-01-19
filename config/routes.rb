@@ -14,6 +14,13 @@ Rails.application.routes.draw do
   post '/slack-webhooks', to: 'slack#webhooks'
   get '/oauth-google', to: 'google_auth#auth'
 
+  namespace :zapier do
+    post '/auth', to: 'auth#execute'
+    resources :goals, only: %i[index]
+    resources :measurements, only: %i[create]
+    # post '/measurements', to: 'measurements#execute'
+  end
+
   unless Rails.env.development?
     Sidekiq::Web.use(Rack::Auth::Basic) do |username, password|
       # Protect against timing attacks:

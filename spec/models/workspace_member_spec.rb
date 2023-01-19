@@ -5,6 +5,7 @@
 # Table name: workspace_members
 #
 #  id           :bigint           not null, primary key
+#  api_key      :uuid             not null
 #  role         :integer          default("admin"), not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

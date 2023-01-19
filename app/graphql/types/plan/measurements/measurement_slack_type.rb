@@ -5,7 +5,7 @@ module Types
     module Measurements
       class MeasurementSlackType < Types::BaseObject
         field :id, String, null: false
-        field :integration_id, String, null: false
+        field :integration_id, String, null: true
         field :metric, String, null: false
         field :value, Int, null: false
         field :channel_filters, type: [SlackChannelType], null: true
