@@ -3,8 +3,10 @@
 module Zapier
   class MeasurementsController < BaseController
     def create
-      measurement = Measurement.find_by(code: params[:meta][:zap][:link]) || Zapier::CreateMeasurement.call(
-        params[:inputData], current_workspace_member, params[:meta][:zap][:link]
+      link = params[:meta][:zap][:link]
+      Rails.logger.info("Code #{link}")
+      measurement = Measurement.find_by(code: link) || Zapier::CreateMeasurement.call(
+        params[:inputData], current_workspace_member, link
       )
 
       zapier = measurement.tracking
