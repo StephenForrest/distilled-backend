@@ -10,7 +10,7 @@
 #  value                 :integer          default(0), not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  integrations_slack_id :bigint           not null
+#  integrations_slack_id :bigint
 #  measurement_id        :bigint           not null
 #  workspace_id          :bigint           not null
 #
@@ -24,14 +24,15 @@ module Measurements
   class Slack < ApplicationRecord
     belongs_to :workspace
     belongs_to :measurement
-    belongs_to :integration_slack, class_name: 'Integrations::Slack', foreign_key: 'integrations_slack_id'
+    belongs_to :integration_slack, class_name: 'Integrations::Slack',
+                                   foreign_key: 'integrations_slack_id', optional: true
     has_many :measurement_slack_action_logs,
              dependent: :destroy, foreign_key: 'measurements_slacks_id',
              class_name: 'Measurements::SlackActionLog',
              inverse_of: :measurements_slack
 
     has_and_belongs_to_many :slack_channels, association_foreign_key: 'slack_channel_id',
-    foreign_key: 'measurements_slack_id'
+                                             foreign_key: 'measurements_slack_id'
 
     self.table_name = 'measurements_slack'
 
@@ -42,8 +43,8 @@ module Measurements
       'new_messages': 3,
       'all_messages': 4,
       'new_invites': 5,
-      'all_invites': 6
-
+      'all_invites': 6,
+      'zapier_metric': 7
     }
 
     def completion
@@ -96,6 +97,8 @@ module Measurements
             ::Slack::FetchOldMessagesJob.perform_later(channel, measurement_slack)
           end
         end
+
+        measurement_slack
       end
     end
 
@@ -113,6 +116,8 @@ module Measurements
     end
 
     def self.create_slack_channels!(measurement_slack, channels)
+      return measurement_slack if channels.empty?
+
       slack_team_id = Integrations::Slack.find_by(integration_id: measurement_slack.integration_id).team_id
 
       channels.each do |channel|

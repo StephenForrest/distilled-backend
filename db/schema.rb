@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_12_143002) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_17_200835) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -98,12 +98,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_12_143002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "workspace_id", null: false
+    t.string "code"
     t.index ["success_criteria_id"], name: "index_measurements_on_success_criteria_id"
     t.index ["workspace_id"], name: "index_measurements_on_workspace_id"
   end
 
   create_table "measurements_slack", force: :cascade do |t|
-    t.bigint "integrations_slack_id", null: false
+    t.bigint "integrations_slack_id"
     t.bigint "workspace_id", null: false
     t.bigint "measurement_id", null: false
     t.datetime "created_at", null: false
@@ -220,6 +221,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_12_143002) do
     t.integer "role", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "api_key", default: -> { "gen_random_uuid()" }, null: false
     t.index ["user_id"], name: "index_workspace_members_on_user_id"
     t.index ["workspace_id"], name: "index_workspace_members_on_workspace_id"
   end
