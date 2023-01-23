@@ -3,6 +3,10 @@
 module Zapier
   class MeasurementsController < BaseController
     def create
+      if params[:meta][:isLoadingSample]
+        render json: { status: :ok, test_call: true }
+        return
+      end
       link = params[:meta][:zap][:link]
       Rails.logger.info("Code #{link}")
       measurement = Measurement.find_by(code: link) || Zapier::CreateMeasurement.call(
