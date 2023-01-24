@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   post '/slack-event', to: 'slack#event'
   post '/slack-webhooks', to: 'slack#webhooks'
+  post '/stripe-webhooks', to: 'stripe#webhooks'
   get '/oauth-google', to: 'google_auth#auth'
 
   namespace :zapier do

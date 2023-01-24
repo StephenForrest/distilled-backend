@@ -18,7 +18,7 @@ gem 'puma', '~> 5.0'
 # gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
+gem 'redis', '~> 4.0'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -26,7 +26,7 @@ gem "redis", "~> 4.0"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
-gem 'analytics-ruby', '~> 2.4.0', :require => 'segment/analytics'
+gem 'analytics-ruby', '~> 2.4.0', require: 'segment/analytics'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
@@ -78,4 +78,6 @@ gem 'sentry-ruby', '~> 5.7'
 
 gem 'sentry-rails', '~> 5.7'
 
-gem "sidekiq", "~> 7.0"
+gem 'sidekiq', '~> 7.0'
+
+gem 'stripe', '~> 8.1'

@@ -256,6 +256,7 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.11.0)
+    stripe (8.1.0)
     thor (1.2.1)
     timeout (0.3.1)
     tzinfo (2.0.5)
@@ -296,6 +297,7 @@ DEPENDENCIES
   sentry-rails (~> 5.7)
   sentry-ruby (~> 5.7)
   sidekiq (~> 7.0)
+  stripe (~> 8.1)
   tzinfo-data
   whenever (~> 1.0)
 

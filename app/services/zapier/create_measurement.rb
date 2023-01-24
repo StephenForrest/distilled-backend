@@ -31,7 +31,7 @@ module Zapier
           }
         }
         zapier = Measurements::Slack.on_create!(measurement: success_criteria.measurement, settings:)
-        zapier.measurement.update!(code: code)
+        zapier.measurement.update!(code:)
         zapier.measurement
       end
     end

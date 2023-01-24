@@ -30,7 +30,7 @@ module Integrations
 
     def self.fetch_token(code:, client_id:, client_secret:)
       HTTParty.post(
-        "#{SLACK_BASE_API}/oauth.v2.access", 
+        "#{SLACK_BASE_API}/oauth.v2.access",
         body: { code:, client_id:, client_secret:, redirect_uri: ENV.fetch('SLACK_REDIRECT_URI') }
       )
     end
@@ -57,6 +57,7 @@ module Integrations
     end
 
     private
+
     def fetch_paginated_conversations(cursor: nil, channels: [], options: {})
       options[:cursor] = cursor if cursor.present?
       res = slack_get_request('conversations.list', options)

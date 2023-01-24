@@ -10,6 +10,7 @@
 #  boolean               :boolean          default(FALSE), not null
 #  domain                :string
 #  string                :string
+#  stripe_product        :string
 #  title                 :string(255)      not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null

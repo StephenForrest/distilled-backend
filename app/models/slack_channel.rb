@@ -17,5 +17,5 @@
 #
 class SlackChannel < ApplicationRecord
   has_and_belongs_to_many :measurement_slacks, association_foreign_key: 'measurements_slack_id',
-                                               foreign_key: 'slack_channel_id', class_name: 'Measurements::Slack'
+                                               class_name: 'Measurements::Slack'
 end

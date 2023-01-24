@@ -15,7 +15,7 @@ module WebSockets
     def call
       ::WebSockets::Redis.instance.publish(
         TOPIC,
-        JSON.generate(type: event_name, payload: payload, channel: "private:#{channel}:#{id}")
+        JSON.generate(type: event_name, payload:, channel: "private:#{channel}:#{id}")
       )
     end
 

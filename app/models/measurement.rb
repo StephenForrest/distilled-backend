@@ -34,14 +34,13 @@ class Measurement < ApplicationRecord
     case tracking_type.to_sym
     when :slack
       Measurements::Slack
-    # TODO (atanych): Looks like we can unifity measurements
+    # TODO: (atanych): Looks like we can unifity measurements
     when :zapier
       Measurements::Slack
     else
       raise 'Invalid tracking type'
     end
   end
-  
 
   def validate_settings(tracking_settings, errors)
     validation_errors = tracking_class.validate_settings(self, tracking_settings)

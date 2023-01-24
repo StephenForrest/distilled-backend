@@ -94,7 +94,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
-    domain: "getdistilled.io",
+    domain: 'getdistilled.io',
     port: 587,
     user_name: 'hello@getdistilled.io',
     password: Rails.application.credentials.config[:smtp_password],

@@ -13,15 +13,15 @@ class SlackController < ApplicationController
   end
 
   def webhooks
-    if params[:type] == 'url_verification'
-      return render json: {challenge: params[:challenge]}
-    end
+    return render json: { challenge: params[:challenge] } if params[:type] == 'url_verification'
+
     case params[:event][:type]
     when 'message'
       channel = SlackChannel.find_by(slack_team_id: params[:event][:team], slack_channel_id: params[:event][:channel])
       if channel
         channel.measurement_slacks.each do |slack|
           next if !slack.new_messages? && !slack.all_messages?
+
           slack.increment_by(1)
 
           payload = {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_200835) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_22_061130) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -167,6 +167,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_200835) do
     t.index ["team_id"], name: "index_slack_events_on_team_id"
   end
 
+  create_table "stripe_customers", force: :cascade do |t|
+    t.bigint "workspace_id", null: false
+    t.string "stripe_customer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stripe_customer_id"], name: "index_stripe_customers_on_stripe_customer_id"
+    t.index ["workspace_id"], name: "index_stripe_customers_on_workspace_id"
+  end
+
   create_table "success_criterias", force: :cascade do |t|
     t.bigint "goal_id", null: false
     t.integer "success_criteria_type", default: 0, null: false
@@ -235,8 +244,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_200835) do
     t.string "string"
     t.boolean "auto_join_from_domain", default: false, null: false
     t.boolean "boolean", default: false, null: false
+    t.string "stripe_product"
   end
 
   add_foreign_key "measurements_slack_slack_channels", "measurements_slack"
   add_foreign_key "measurements_slack_slack_channels", "slack_channels"
+  add_foreign_key "stripe_customers", "workspaces"
 end
