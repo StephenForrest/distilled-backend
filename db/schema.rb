@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_22_061130) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_24_080050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -245,6 +245,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_061130) do
     t.boolean "auto_join_from_domain", default: false, null: false
     t.boolean "boolean", default: false, null: false
     t.string "stripe_product"
+    t.jsonb "onboarding_steps", default: {}, null: false
   end
 
   add_foreign_key "measurements_slack_slack_channels", "measurements_slack"

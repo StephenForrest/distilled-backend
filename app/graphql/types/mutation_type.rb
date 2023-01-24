@@ -42,5 +42,7 @@ module Types
 
     # slack integration
     field :create_slack_integration, mutation: Mutations::Integrations::Slack::CreateSlackIntegrationMutation
+
+    field :pass_onboarding_step, mutation: Mutations::PassOnboardingStepMutation
   end
 end

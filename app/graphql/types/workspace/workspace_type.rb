@@ -9,6 +9,7 @@ module Types
       field :auto_join_from_domain, type: Boolean, null: false
       field :personal_domain, type: Boolean, null: false
       field :api_key, type: String, null: false
+      field :current_onboarding_step, type: String
       field :workspace_members, type: [Types::Workspace::WorkspaceMemberType], null: false
 
       def personal_domain
@@ -17,6 +18,10 @@ module Types
 
       def api_key
         context[:current_user].workspace_members.find_by(workspace_id: object.id)&.api_key
+      end
+
+      def current_onboarding_step
+        ::Workspaces::OnboardingSteps.new(object).current&.camelize(:lower)
       end
     end
   end
