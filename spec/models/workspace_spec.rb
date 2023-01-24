@@ -9,6 +9,7 @@
 #  auto_join_from_domain :boolean          default(FALSE), not null
 #  boolean               :boolean          default(FALSE), not null
 #  domain                :string
+#  onboarding_steps      :jsonb            not null
 #  string                :string
 #  stripe_product        :string
 #  title                 :string(255)      not null

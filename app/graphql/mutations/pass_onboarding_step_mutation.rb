@@ -10,11 +10,11 @@ module Mutations
 
     argument :name, StepNameEnum, required: true
 
-    field :workspaces, Types::Workspace::WorkspaceType, null: false
+    field :workspace, Types::Workspace::WorkspaceType, null: false
 
     def resolve(name:)
       ::Workspaces::OnboardingSteps.new(current_workspace).pass_onboarding_step(name)
-      { workspaces: current_workspace }
+      { workspace: current_workspace }
     end
   end
 end
