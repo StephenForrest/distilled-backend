@@ -14,9 +14,10 @@ def enable_sentry_logger
 end
 
 Sentry.init do |config|
-  config.enabled_environments = %w[production]
+  config.enabled_environments = %w[production development staging]
   if Rails.env.production?
-    config.dsn = 'https://f3d7fa88f6c9469e925b49af61818023@o4504371094159360.ingest.sentry.io/4504371095142401'
+    config.environment = Rails.env
+    config.dsn = 'https://40a85c32a3e84e2e935db7a272ee3759@o4504376872796160.ingest.sentry.io/4504453747572736'
   end
   config.breadcrumbs_logger = %i[active_support_logger http_logger]
 
