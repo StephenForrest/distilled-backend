@@ -5,13 +5,11 @@ module Workspaces
     SURVEY = 'survey'
     SUBSCRIPTION = 'subscription'
     DEMO = 'demo'
-    CALENDLY = 'calendly'
 
     ALL = [
       SURVEY,
       SUBSCRIPTION,
-      DEMO,
-      CALENDLY
+      DEMO
     ].freeze
 
     attr_reader :workspace

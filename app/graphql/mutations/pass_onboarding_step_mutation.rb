@@ -6,7 +6,6 @@ module Mutations
       value 'SURVEY', value: ::Workspaces::OnboardingSteps::SURVEY
       value 'DEMO', value: ::Workspaces::OnboardingSteps::DEMO
       value 'SUBSCRIPTION', value: ::Workspaces::OnboardingSteps::SUBSCRIPTION
-      value 'CALENDLY', value: ::Workspaces::OnboardingSteps::CALENDLY
     end
 
     argument :name, StepNameEnum, required: true
