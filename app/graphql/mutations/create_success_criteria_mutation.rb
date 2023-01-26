@@ -31,7 +31,6 @@ module Mutations
             success_criteria_type, goal, name, description, start_date,
             end_date
           )
-          binding.pry
           tracking_type = tracking_settings.keys.first
           Mutations::CreateSuccessCriteriaMutation.create_success_criteria_object(
             current_workspace,
