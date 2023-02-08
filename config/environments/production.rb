@@ -88,14 +88,8 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   config.read_encrypted_secrets = true
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.smtp_settings[:enable_starttls_auto] = false
-  config.action_mailer.smtp_settings[:openssl_verify_mode] = 'none'
-  config.action_mailer.smtp_settings[:verify_mode] = OpenSSL::SSL::VERIFY_NONE
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings[:debug] = true
-  config.action_mailer.smtp_settings[:logger] = Logger.new("#{Rails.root}/log/smtp.log")
-
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.smtp_settings = {
@@ -104,7 +98,8 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
     port: 465,
     user_name: 'hello@getdistilled.io',
     password: Rails.application.credentials.config[:smtp_password],
-    authentication: :login,
+    authentication: :plain,
+    enable_starttls_auto: true
   }
 
   config.web_app_url = 'https://app.getdistilled.io'
