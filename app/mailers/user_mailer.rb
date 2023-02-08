@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
-  default from: 'info@getdistilled.io'
+  default from: 'hello@getdistilled.io'
 
   def welcome_email
     @user = params[:user]
