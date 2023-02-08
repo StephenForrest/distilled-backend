@@ -93,13 +93,12 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.smtp_settings = {
-    address: 'smtppro.zoho.com',
+    address: 'smtp.zoho.com',
+    port: 587,
     domain: 'getdistilled.io',
-    port: 465,
     user_name: 'hello@getdistilled.io',
     password: Rails.application.credentials.config[:smtp_password],
     authentication: :plain,
-    openssl_verify_mode:  'none',
     enable_starttls_auto: true,
     tls: true
   }
