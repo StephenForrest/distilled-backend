@@ -68,7 +68,7 @@ Analytics = Segment::Analytics.new({
  )
 
  Analytics.group(
-   user_id: 'current_user.id',
+   user_id: user.id,
    group_id: current_workspace.id,
    traits: {
      name: current_workspace.name
