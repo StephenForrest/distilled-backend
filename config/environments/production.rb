@@ -98,7 +98,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
     port: 587,
     user_name: 'hello@getdistilled.io',
     password: Rails.application.credentials.config[:smtp_password],
-    authentication: :plain,
+    authentication: :login,
     enable_starttls_auto: true
   }
 
