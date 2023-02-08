@@ -6,7 +6,7 @@ Analytics = Segment::Analytics.new({
                                    })
 
  Analytics.identify(
-   user_id: user.id,
+   user_id: current_user.id,
    traits: {
      email: current_user.email,
      name: current_user.name
@@ -14,7 +14,7 @@ Analytics = Segment::Analytics.new({
  )
 
  Analytics.track(
-   user_id: user.id,
+   user_id: current_user.id,
    event: 'User Signed In',
    properties: {
      email: current_user.email,
@@ -59,7 +59,7 @@ Analytics = Segment::Analytics.new({
  )
 
  Analytics.track(
-   user_id: user.id,
+   user_id: current_user.id,
    event: 'User Created Measurement',
    properties: {
      email: current_user.email,
@@ -68,7 +68,7 @@ Analytics = Segment::Analytics.new({
  )
 
  Analytics.group(
-   user_id: user.id,
+   user_id: current_user.id,
    group_id: current_workspace.id,
    traits: {
      name: current_workspace.name
