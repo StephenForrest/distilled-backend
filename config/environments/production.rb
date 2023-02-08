@@ -99,7 +99,6 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
     user_name: 'hello@getdistilled.io',
     password: Rails.application.credentials.config[:smtp_password],
     authentication: :plain,
-    enable_starttls_auto: false,
     openssl_verify_mode: 'none'
     }
 
