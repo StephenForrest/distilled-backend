@@ -94,15 +94,14 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   config.action_mailer.smtp_settings = {
     address: 'smtp.zoho.com',
-    port: 587,
+    port: 465,
     domain: 'getdistilled.io',
     user_name: 'hello@getdistilled.io',
     password: Rails.application.credentials.config[:smtp_password],
     authentication: :plain,
-    enable_starttls_auto: true,
     openssl_verify_mode: 'none',
-    tls: true
-  }
+    ssl: true
+    }
 
   config.web_app_url = 'https://app.getdistilled.io'
   config.web_api_url = 'https://api.getdistilled.io'
