@@ -101,7 +101,6 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
     authentication: :plain,
     openssl_verify_mode:  'none',
     enable_starttls_auto: true,
-    ssl: true,
     tls: true
   }
 
