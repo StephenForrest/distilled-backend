@@ -20,16 +20,7 @@ module Mutations
         max_goals = 0
       end
     
-      if plan.goals.count >= max_goals
-        begin
-          Intercom::Client.new.messages.create(
-            from: { type: 'user', id: current_user.intercom_user_id },
-            body: "Bummer! You've reached the maximum number of goals allowed on the free plan 🥺. Ready to upgrade?"
-          )
-        rescue => e
-          Rails.logger.error("Intercom Error: #{e.inspect}")
-        end
-    
+      if plan.goals.count >= max_goals    
         raise GraphQL::ExecutionError, "You have reached the maximum number of goals allowed on the free plan"
       end
     
