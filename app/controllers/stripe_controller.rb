@@ -26,11 +26,14 @@ class StripeController < ApplicationController
         stripe_customer_id: event.data.object.customer, workspace_id: event.data.object.client_reference_id
       )
     when 'customer.subscription.created'
-      workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
-      workspace.update!(stripe_product: event.data.object.plan.product)
-      # sometimes stripe does not derirect back the customer and the customer needs to manually reopen our app
-      # with the passed step "subscription"
-      Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+      stripe_customer = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer)
+      if stripe_customer
+        workspace = stripe_customer.workspace
+        if workspace
+          workspace.update!(stripe_product: event.data.object.plan.product)
+          Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+        end
+      end
     when 'charge.failed'
       Rails.logger.error("Stripe charge.failed for #{event.data.object.inspect}")
     when 'invoice.payment_failed'
