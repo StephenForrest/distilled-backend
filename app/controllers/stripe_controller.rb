@@ -26,7 +26,7 @@ class StripeController < ApplicationController
         stripe_customer_id: event.data.object.customer, workspace_id: event.data.object.client_reference_id
       )
     when 'customer.subscription.created'
-      stripe_customer = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer)
+      stripe_customer = StripeCustomer.find_or_create_by(stripe_customer_id: event.data.object.customer)
       if stripe_customer
         workspace = stripe_customer.workspace
         if workspace
