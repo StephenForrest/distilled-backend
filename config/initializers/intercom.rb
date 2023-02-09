@@ -1,7 +1,13 @@
 IntercomRails.config do |config|
   # == Intercom app_id
   #
-  config.app_id = ENV["INTERCOM_APP_ID"] || "dnitzxh7"
+  config.app_id = ENV["INTERCOM_APP_ID"]
+
+  config.api_base = "https://api-iam.intercom.io"
+
+  config.include_for_logged_out_users = true
+
+  config.api_secret = Rails.application.credentials.config[:intercom_secure_mode_secret_key]
 
   # == Intercom session_duration
   #

@@ -11,7 +11,14 @@ module Mutations
     def resolve(title:, plan_uuid:, expires_on:)
       plan = current_workspace.plans.find_by(uuid: plan_uuid)
       stripe_product = current_workspace.stripe_product
-      max_goals = stripe_product == 'free' ? 6 : Float::INFINITY
+    
+      if stripe_product == "prod_NHFhAoM0sJUGSL"
+        max_goals = 6
+      elsif stripe_product == "prod_some_other_id"
+        max_goals = Float::INFINITY
+      else
+        max_goals = 0
+      end
     
       if plan.goals.count >= max_goals
         begin
@@ -35,6 +42,6 @@ module Mutations
       )
     
       { goal: goal }
-    end
+    end    
   end
 end
