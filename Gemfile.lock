@@ -110,6 +110,8 @@ GEM
     httpclient (2.8.3)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
+    intercom-rails (0.4.2)
+      activesupport (> 3.0)
     io-console (0.6.0)
     irb (1.6.2)
       reline (>= 0.3.0)
@@ -283,6 +285,7 @@ DEPENDENCIES
   forgery (~> 0.8.1)
   graphql (~> 2.0)
   httparty (~> 0.20.0)
+  intercom-rails
   letter_opener
   pg (~> 1.1)
   pry (~> 0.14.1)
