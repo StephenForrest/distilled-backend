@@ -33,8 +33,7 @@ class StripeController < ApplicationController
         Rails.logger.info "Stripe checkout session completed - Workspace with id: #{workspace.id} was found and associated with stripe customer id: #{event.data.object.customer}"
       else
         Rails.logger.error "Stripe checkout session completed - Workspace with email domain: #{domain} was NOT found"
-      end
-    end    
+      end    
     when 'customer.subscription.created'
       workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
       if workspace
