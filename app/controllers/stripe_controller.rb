@@ -22,15 +22,19 @@ class StripeController < ApplicationController
 
     case event.type
     when 'checkout.session.completed'
-      workspace = Workspace.find_by(id: event.data.object.customer_details.email)
+      email = event.data.object.customer_details.email
+      domain = email.match(/\@(.+)/)[1]
+      workspace = Workspace.find_by(title: domain)
+    
       if workspace
         StripeCustomer.find_or_create_by!(
           stripe_customer_id: event.data.object.customer, workspace: workspace
         )
         Rails.logger.info "Stripe checkout session completed - Workspace with id: #{workspace.id} was found and associated with stripe customer id: #{event.data.object.customer}"
       else
-        Rails.logger.error "Stripe checkout session completed - Workspace with id: #{event.data.object.client_reference_id} was NOT found"
+        Rails.logger.error "Stripe checkout session completed - Workspace with email domain: #{domain} was NOT found"
       end
+    end    
     when 'customer.subscription.created'
       workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
       if workspace
