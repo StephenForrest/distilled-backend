@@ -25,12 +25,13 @@ class StripeController < ApplicationController
     case event.type
     when 'checkout.session.completed'
       Rails.logger.info("Stripe webhook checkout.session.completed: #{event.data.object.inspect}")
+      workspace = Workspace.find_or_create_by!(id: event.data.object.client_reference_id)
       StripeCustomer.find_or_create_by!(
-        stripe_customer_id: event.data.object.customer, workspace_id: event.data.object.client_reference_id
+        stripe_customer_id: event.data.object.customer, workspace_id: workspace.id
       )
     when 'customer.subscription.created'
       Rails.logger.info("Stripe webhook customer.subscription.created: #{event.data.object.inspect}")
-      stripe_customer = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer)
+      stripe_customer = StripeCustomer.find_or_create_by!(stripe_customer_id: event.data.object.customer)
       if stripe_customer.present?
         workspace = stripe_customer.workspace
         workspace.update!(stripe_product: event.data.object.plan.product)
