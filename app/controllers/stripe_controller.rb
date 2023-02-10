@@ -30,11 +30,14 @@ class StripeController < ApplicationController
       )
     when 'customer.subscription.created'
       Rails.logger.info("Stripe webhook customer.subscription.created: #{event.data.object.inspect}")
-      workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
-      workspace.update!(stripe_product: event.data.object.plan.product)
-      # sometimes stripe does not derirect back the customer and the customer needs to manually reopen our app
-      # with the passed step "subscription"
-      Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+      stripe_customer = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer)
+      if stripe_customer.present?
+        workspace = stripe_customer.workspace
+        workspace.update!(stripe_product: event.data.object.plan.product)
+        Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+      else
+        Rails.logger.error("Stripe webhook customer.subscription.created: StripeCustomer not found for stripe_customer_id #{event.data.object.customer}")
+      end    
     when 'charge.failed'
       Rails.logger.error("Stripe charge.failed for #{event.data.object.inspect}")
     when 'invoice.payment_failed'
