@@ -25,6 +25,10 @@ class StripeController < ApplicationController
       email = event.data.object.customer_details.email
       domain = email.match(/\@(.+)/)[1]
       workspace = Workspace.find_by(title: domain)
+
+      if !workspace && Workspace.public_domain?(domain)
+        workspace = Workspace.create_default!(user: email)
+      end
     
       if workspace
         StripeCustomer.find_or_create_by!(
