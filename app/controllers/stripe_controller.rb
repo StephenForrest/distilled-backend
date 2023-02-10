@@ -22,7 +22,7 @@ class StripeController < ApplicationController
 
     case event.type
     when 'checkout.session.completed'
-      workspace = Workspace.find_by(id: event.data.object.client_reference_id)
+      workspace = Workspace.find_by(id: event.data.object.customer_details.email)
       if workspace
         StripeCustomer.find_or_create_by!(
           stripe_customer_id: event.data.object.customer, workspace: workspace
