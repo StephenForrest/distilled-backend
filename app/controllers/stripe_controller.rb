@@ -27,7 +27,7 @@ class StripeController < ApplicationController
       )
     when 'customer.subscription.created'
       Rails.logger.info("Stripe webhook customer.subscription.created: #{event.data.object.inspect}")
-      stripe_customer = StripeCustomer.find_or_create_by!(stripe_customer_id: event.data.object.StripeCustomer)
+      stripe_customer = StripeCustomer.find_or_create_by!(stripe_customer_id: event.data.object.customer)
       workspace = stripe_customer.workspace
       workspace.update!(stripe_product: event.data.object.plan.product)
       Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
