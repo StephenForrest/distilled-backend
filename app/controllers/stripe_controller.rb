@@ -23,13 +23,13 @@ class StripeController < ApplicationController
     case event.type
     when 'checkout.session.completed'
       StripeCustomer.find_or_create_by!(
-        stripe_customer_id: event.data.object.stripe_customer_id, workspace_id: event.data.object.client_reference_id
+        stripe_customer_id: event.data.object.StripeCustomer, workspace_id: event.data.object.client_reference_id
       )
     when 'customer.subscription.created'
-      workspace = StripeCustomer.find_or_create_by(stripe_customer_id: event.data.object.customer).workspace
+      Rails.logger.info("Stripe webhook customer.subscription.created: #{event.data.object.inspect}")
+      stripe_customer = StripeCustomer.find_or_create_by!(stripe_customer_id: event.data.object.stripe_customer)
+      workspace = stripe_customer.workspace
       workspace.update!(stripe_product: event.data.object.plan.product)
-      # sometimes stripe does not derirect back the customer and the customer needs to manually reopen our app
-      # with the passed step "subscription"
       Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
     when 'charge.failed'
       Rails.logger.error("Stripe charge.failed for #{event.data.object.inspect}")
