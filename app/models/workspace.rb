@@ -37,8 +37,7 @@ class Workspace < ApplicationRecord
 
   def self.create_default!(user:)
     workspace = Workspace.create!(
-      title: [Forgery::Basic.color, Forgery::Address.street_name.split(' ').first, rand(1000)].join('-').downcase,
-      public_domain?: true,
+      title: [Forgery::Basic.color, Forgery::Address.street_name.split(' ').first, rand(1000)].join('-').downcase
     )
     workspace.workspace_members.create!(user:, role: 'admin')
     workspace
