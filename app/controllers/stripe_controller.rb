@@ -22,15 +22,24 @@ class StripeController < ApplicationController
 
     case event.type
     when 'checkout.session.completed'
-      StripeCustomer.find_or_create_by!(
-        stripe_customer_id: event.data.object.StripeCustomer, workspace_id: event.data.object.client_reference_id
-      )
+      workspace = Workspace.find_by(id: event.data.object.client_reference_id)
+      if workspace
+        StripeCustomer.find_or_create_by!(
+          stripe_customer_id: event.data.object.customer, workspace: workspace
+        )
+        Rails.logger.info "Stripe checkout session completed - Workspace with id: #{workspace.id} was found and associated with stripe customer id: #{event.data.object.customer}"
+      else
+        Rails.logger.error "Stripe checkout session completed - Workspace with id: #{event.data.object.client_reference_id} was NOT found"
+      end
     when 'customer.subscription.created'
-      Rails.logger.info("Stripe webhook customer.subscription.created: #{event.data.object.inspect}")
-      stripe_customer = StripeCustomer.find_or_create_by!(stripe_customer_id: event.data.object.customer)
-      workspace = stripe_customer.workspace
-      workspace.update!(stripe_product: event.data.object.plan.product)
-      Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+      workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
+      if workspace
+        workspace.update!(stripe_product: event.data.object.plan.product)
+        Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+        Rails.logger.info "Stripe customer subscription created - Workspace with id: #{workspace.id} was found and updated with product: #{event.data.object.plan.product}"
+      else
+        Rails.logger.error "Stripe customer subscription created - Stripe customer with id: #{event.data.object.customer} was NOT found"
+      end
     when 'charge.failed'
       Rails.logger.error("Stripe charge.failed for #{event.data.object.inspect}")
     when 'invoice.payment_failed'
