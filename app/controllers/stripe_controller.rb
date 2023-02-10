@@ -27,7 +27,7 @@ class StripeController < ApplicationController
       workspace = Workspace.find_by(title: domain)
 
       if !workspace
-        workspace = Workspace.find_by(public_domain: true)
+        workspace = Workspace.find_by(public_domain?: true)
       end
     
       if workspace
