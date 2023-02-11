@@ -29,7 +29,7 @@ module Mutations
       end
       
       if goal.success_criterias.count >= max_success_criteria    
-        raise GraphQL::ExecutionError, "You have reached the maximum number of success criteria allowed on the free plan"
+        return GraphQL::ExecutionError.new("You have reached the maximum number of success criteria allowed on the free plan")
       end
 
       errors = ValidationErrors.new
