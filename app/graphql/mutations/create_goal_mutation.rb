@@ -12,9 +12,9 @@ module Mutations
       plan = current_workspace.plans.find_by(uuid: plan_uuid)
       stripe_product = current_workspace.stripe_product
     
-      if stripe_product == "prod_NHFhAoM0sJUGSL"
+      if stripe_product == "STRIPE_FREE_PLAN_ID"
         max_goals = 6
-      elsif stripe_product == "prod_some_other_id"
+      elsif stripe_product == "STRIPE_PRO_PLAN_ID"
         max_goals = Float::INFINITY
       else
         max_goals = 0

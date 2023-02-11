@@ -18,8 +18,19 @@ module Mutations
     # rubocop:disable Metrics/ParameterLists
     # rubocop:disable Metrics/AbcSize
     def resolve(goal_id:, success_criteria_type:, name:, description:, start_date:, end_date:, tracking_settings:)
+
       goal = current_workspace.goals.find(goal_id)
-      raise GraphQL::ExecutionError, 'No goal found' if goal.blank?
+      stripe_product = current_workspace.stripe_product
+
+      if stripe_product == "STRIPE_FREE_PLAN_ID"
+        max_success_criteria = 24
+      else
+        max_success_criteria = Float::INFINITY
+      end
+      
+      if goal.success_criterias.count >= max_success_criteria    
+        raise GraphQL::ExecutionError, "You have reached the maximum number of success criteria allowed on the free plan"
+      end
 
       errors = ValidationErrors.new
       SuccessCriteria.run_validations(goal:, name:, start_date:, end_date:, errors:)
