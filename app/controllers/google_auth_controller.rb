@@ -31,7 +31,7 @@ class GoogleAuthController < ApplicationController
     user = get_user(info)
     user_session = UserSession.generate_user_session(user:, login_type: 'google')
     user_session.session_id
-  end
+  endjw
 
   def get_user(info)
     email = info['email']
