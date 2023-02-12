@@ -11,7 +11,7 @@ module Mutations
 
       if stripe_product == "STRIPE_FREE_PLAN_ID"
         max_plans = 1
-      else
+      elsif stripe_product == "STRIPE_PRO_PLAN_ID"
         max_plans = Float::INFINITY
       end
 

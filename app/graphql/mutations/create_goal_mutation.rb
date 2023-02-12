@@ -14,11 +14,11 @@ module Mutations
     
       if stripe_product == "STRIPE_FREE_PLAN_ID"
         max_goals = 6
-      else
+      elsif stripe_product == "STRIPE_PRO_PLAN_ID"
         max_goals = Float::INFINITY
       end
     
-      if plans.goals.count >= max_goals    
+      if plan.goals.count >= max_goals    
         return GraphQL::ExecutionError.new("You have reached the maximum number of goals allowed on the free plan")
       end
     
