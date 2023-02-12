@@ -16,7 +16,9 @@ module Mutations
       else
         max_plans = 0
       end
-
+      puts stripe_product
+      puts max_plans
+      
       if current_user.plans.count >= max_plans
         return GraphQL::ExecutionError.new("You have reached the maximum number of plans allowed on the free plan")
       end
