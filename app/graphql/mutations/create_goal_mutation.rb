@@ -9,7 +9,6 @@ module Mutations
     field :goal, Types::Plan::GoalType, null: false
 
     def resolve(title:, plan_uuid:, expires_on:)
-      plan = current_workspace.plans.find_by(uuid: plan_uuid)
       stripe_product = current_workspace.stripe_product
     
       if stripe_product == "STRIPE_FREE_PLAN_ID"
@@ -18,7 +17,7 @@ module Mutations
         max_goals = Float::INFINITY
       end
     
-      if plan.goals.count >= max_goals    
+      if current_user.goals.count >= max_goals    
         return GraphQL::ExecutionError.new("You have reached the maximum number of goals allowed on the free plan")
       end
     

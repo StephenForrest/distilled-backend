@@ -10,9 +10,9 @@ module Mutations
       stripe_product = current_workspace.stripe_product
 
       if stripe_product == "STRIPE_FREE_PLAN_ID"
-        max_plans = 1
-      elsif stripe_product == "STRIPE_PRO_PLAN_ID"
-        max_plans = Float::INFINITY
+        max_plans = 1 # 1 plan per workspace
+      else
+        max_plans = Float::INFINITY # unlimited plans per workspace
       end
 
       if current_workspace.plans.count >= max_plans
