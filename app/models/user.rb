@@ -67,11 +67,8 @@ class User < ApplicationRecord
 
   def create_verification_email
     token = SecureRandom.uuid
-  end
-
-  def generate_jwt_token
-    UserSession.create!(user: self, token: token)
-    JWT.encode({ user_id: id, email: email }, Rails.application.credentials.jwt_secret, 'HS256')
+    user_email_verifications.create!(token:)
+    UserMailer.with(user: self, token:).verify_email.deliver_later
   end
 
   def first_name
