@@ -20,6 +20,12 @@ module Mutations
       if current_workspace.goals.count >= max_goals    
         return GraphQL::ExecutionError.new("You have reached the maximum number of goals allowed on the free plan")
       end
+
+      puts current_workspace.stripe_product
+      puts current_workspace.plans.count
+      puts current_workspace.goals.count
+      puts stripe_product
+      puts max_goals
     
       goal = plan.goals.create!(
         title: title, 
