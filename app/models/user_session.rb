@@ -39,6 +39,17 @@ class UserSession < ApplicationRecord
     UserSession.generate_user_session(user:, login_type: 'email')
   end
 
+  def generate_token(user_id)
+    payload = { user_id: user_id, exp: Time.now.to_i + 3600 }
+    JWT.encode(payload, secret, 'RS256')
+  end
+
+
+  def validate_token(token)
+    decoded_token = JWT.decode(token, secret, true, { algorithm: 'RS256' })
+    decoded_token.first["user_id"]
+  end
+
   def self.generate_user_session(user:, login_type:)
     session_id = SecureRandom.hex(64)
     create!(session_id:, user:, expired: false, login_type:)
