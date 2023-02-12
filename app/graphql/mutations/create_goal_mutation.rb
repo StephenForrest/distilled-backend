@@ -18,7 +18,7 @@ module Mutations
         max_goals = Float::INFINITY
       end
     
-      if plan.goals.count >= max_goals    
+      if current_workspace.plans.goals.count >= max_goals    
         return GraphQL::ExecutionError.new("You have reached the maximum number of goals allowed on the free plan")
       end
     
