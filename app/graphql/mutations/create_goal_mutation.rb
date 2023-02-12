@@ -14,10 +14,8 @@ module Mutations
     
       if stripe_product == "STRIPE_FREE_PLAN_ID"
         max_goals = 6
-      elsif stripe_product == "STRIPE_PRO_PLAN_ID"
-        max_goals = Float::INFINITY
       else
-        max_goals = 0
+        max_goals = Float::INFINITY
       end
     
       if plan.goals.count >= max_goals    
