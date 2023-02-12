@@ -66,9 +66,20 @@ class User < ApplicationRecord
   end
 
   def create_verification_email
-    token = SecureRandom.uuid
+    rsa_private = OpenSSL::PKey::RSA.generate 2048
+    rsa_public = rsa_private.public_key
+    token = JWT.encode payload, rsa_private, 'RS256'
     user_email_verifications.create!(token:)
     UserMailer.with(user: self, token:).verify_email.deliver_later
+    puts token
+    decoded_token = JWT.decode token, rsa_public, true, { algorithm: 'RS256' }
+     Array
+     [
+      {"data"=>"jwt"}, # payload
+      {"alg"=>"RS256"} # header
+    ]
+    puts decoded_token
+    
   end
 
   def first_name

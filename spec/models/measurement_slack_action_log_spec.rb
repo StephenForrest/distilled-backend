@@ -15,8 +15,9 @@
 #
 #  index_measurement_slack_action_logs_on_measurements_slacks_id  (measurements_slacks_id)
 #
-require 'rails_helper'
+ require 'rails_helper'
+ require_relative '../../app/graphql/types/plan/measurements/measurement_slack_action_logs_type'
 
-RSpec.describe MeasurementSlackActionLog, type: :model do
+ RSpec.describe MeasurementSlackActionLog, type: :model do
   pending "add some examples to (or delete) #{__FILE__}"
-end
+ end
