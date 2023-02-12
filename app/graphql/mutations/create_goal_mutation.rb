@@ -9,12 +9,14 @@ module Mutations
     field :goal, Types::Plan::GoalType, null: false
 
     def resolve(title:, plan_uuid:, expires_on:)
-      stripe_product = current_user.stripe_product
+      stripe_product = current_workspace.stripe_product
     
       if stripe_product == "STRIPE_FREE_PLAN_ID"
         max_goals = 6
       elsif stripe_product == "STRIPE_PRO_PLAN_ID"
         max_goals = Float::INFINITY
+      else
+        max_goals = 0
       end
     
       if current_workspace.goals.count >= max_goals    
