@@ -7,7 +7,7 @@ module Mutations
     field :plan, Types::Plan::PlanType, null: false
 
     def resolve(name:)
-      plan = current_workspace.plans.find_by(plan_id: plan_id)
+      plan = current_workspace.plans.find_by(name: name)
       stripe_product = current_workspace.stripe_product
 
       if stripe_product == "STRIPE_FREE_PLAN_ID"
