@@ -35,14 +35,19 @@ class StripeController < ApplicationController
         Rails.logger.error "Stripe checkout session completed - Workspace with email domain: #{domain} was NOT found"
       end    
     when 'customer.subscription.created'
-      workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
-      if workspace
-        workspace.update!(stripe_product: event.data.object.plan.product)
-        Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
-        Rails.logger.info "Stripe customer subscription created - Workspace with id: #{workspace.id} was found and updated with product: #{event.data.object.plan.product}"
+      stripe_customer = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer)
+      if stripe_customer
+        workspace = stripe_customer.workspace
+        if workspace
+          workspace.update!(stripe_product: event.data.object.plan.product)
+          Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
+          Rails.logger.info "Stripe customer subscription created - Workspace with id: #{workspace.id} was found and updated with product: #{event.data.object.plan.product}"
+        else
+          Rails.logger.error "Stripe customer subscription created - Workspace for Stripe customer with id: #{event.data.object.customer} was NOT found"
+        end
       else
         Rails.logger.error "Stripe customer subscription created - Stripe customer with id: #{event.data.object.customer} was NOT found"
-      end
+      end    
     when 'charge.failed'
       Rails.logger.error("Stripe charge.failed for #{event.data.object.inspect}")
     when 'invoice.payment_failed'
