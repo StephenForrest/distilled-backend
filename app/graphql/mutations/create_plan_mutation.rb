@@ -7,7 +7,7 @@ module Mutations
     field :plan, Types::Plan::PlanType, null: false
 
     def resolve(name:)
-      stripe_product = current_workspace.stripe_product
+      stripe_product = current_user.stripe_product
 
       if stripe_product == "STRIPE_FREE_PLAN_ID"
         max_plans = 1 # 1 plan per workspace
