@@ -7,6 +7,7 @@ module Mutations
     field :plan, Types::Plan::PlanType, null: false
 
     def resolve(name:)
+      plan = current_workspace.plans.find_by(plan_id: plan_id)
       stripe_product = current_workspace.stripe_product
 
       if stripe_product == "STRIPE_FREE_PLAN_ID"
@@ -16,9 +17,7 @@ module Mutations
       else
         max_plans = 0
       end
-      puts stripe_product
-      puts max_plans
-      
+
       if current_user.plans.count >= max_plans
         return GraphQL::ExecutionError.new("You have reached the maximum number of plans allowed on the free plan")
       end

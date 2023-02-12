@@ -9,7 +9,7 @@ module Mutations
     field :goal, Types::Plan::GoalType, null: false
 
     def resolve(title:, plan_uuid:, expires_on:)
-      plan = current_workspace.plans.find_by(uuid: plan_uuid)
+      plan = current_workspace.plans.find_by(plan_id: plan_id)
       stripe_product = current_workspace.stripe_product
     
       if stripe_product == "STRIPE_FREE_PLAN_ID"
