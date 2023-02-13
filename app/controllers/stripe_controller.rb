@@ -38,6 +38,10 @@ class StripeController < ApplicationController
       workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
       if workspace
         workspace.update!(stripe_product: event.data.object.plan.product)
+        num_users = workspace.workspace_members.count
+        subscription = Stripe::Subscription.retrieve(event.data.object.id)
+        subscription.quantity = num_users
+        subscription.save
         Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
         Rails.logger.info "Stripe customer subscription created - Workspace with id: #{workspace.id} was found and updated with product: #{event.data.object.plan.product}"
       else
