@@ -40,15 +40,9 @@ class StripeController < ApplicationController
         workspace.update!(stripe_product: event.data.object.plan.product)
         Workspaces::OnboardingSteps.new(workspace).pass_onboarding_step('subscription')
         Rails.logger.info "Stripe customer subscription created - Workspace with id: #{workspace.id} was found and updated with product: #{event.data.object.plan.product}"
-        quantity = workspace.workspace_members.count
-        Stripe::Subscription.update(
-          event.data.object.id,
-          quantity: quantity
-        )
-        Rails.logger.info "Stripe subscription with id: #{event.data.object.id} was updated with a quantity of #{quantity}"
       else
         Rails.logger.error "Stripe customer subscription created - Stripe customer with id: #{event.data.object.customer} was NOT found"
-      end    
+      end
     when 'charge.failed'
       Rails.logger.error("Stripe charge.failed for #{event.data.object.inspect}")
     when 'invoice.payment_failed'
