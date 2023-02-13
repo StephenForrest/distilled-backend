@@ -38,7 +38,9 @@ class WorkspaceMember < ApplicationRecord
     )
 
     Rails.logger.info "Stripe subscription with id: #{subscription.id} was updated with a quantity of #{quantity}"
-
+  end
+end
+  
   enum :role, {
     admin: 0
   }
