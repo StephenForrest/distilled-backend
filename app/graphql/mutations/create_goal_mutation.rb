@@ -11,12 +11,12 @@ module Mutations
     def resolve(title:, plan_uuid:, expires_on:)
       stripe_product = current_workspace.stripe_product
     
-      if stripe_product == "STRIPE_FREE_PLAN_ID"
-        max_goals = 6
-      elsif stripe_product == "STRIPE_PRO_PLAN_ID"
-        max_goals = Float::INFINITY
+      if stripe_product == ENV['STRIPE_FREE_PLAN_ID']
+        max_goals = 1 # 1 plan per workspace
+      elsif stripe_product == ENV['STRIPE_PRO_PLAN_ID']
+        max_goals = Float::INFINITY # unlimited plans per workspace
       else
-        max_goals = 0
+        max_goals = 0 # no plans allowed
       end
     
       if current_workspace.goals.count >= max_goals    

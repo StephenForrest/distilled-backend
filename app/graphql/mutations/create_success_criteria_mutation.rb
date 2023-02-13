@@ -19,16 +19,17 @@ module Mutations
     # rubocop:disable Metrics/AbcSize
     def resolve(goal_id:, success_criteria_type:, name:, description:, start_date:, end_date:, tracking_settings:)
 
-      goal = current_workspace.goals.find(goal_id)
       stripe_product = current_workspace.stripe_product
 
-      if stripe_product == "STRIPE_FREE_PLAN_ID"
-        max_success_criteria = 24
+      if stripe_product == ENV['STRIPE_FREE_PLAN_ID']
+        max_success_criteria = 1 # 1 plan per workspace
+      elsif stripe_product == ENV['STRIPE_PRO_PLAN_ID']
+        max_success_criteria = Float::INFINITY # unlimited plans per workspace
       else
-        max_success_criteria = Float::INFINITY
+        max_success_criteria = 0 # no plans allowed
       end
       
-      if goal.success_criterias.count >= max_success_criteria    
+      if current_workspace.goals.success_criterias.count >= max_success_criteria    
         return GraphQL::ExecutionError.new("You have reached the maximum number of success criteria allowed on the free plan")
       end
 
