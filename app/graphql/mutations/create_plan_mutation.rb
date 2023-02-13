@@ -11,7 +11,7 @@ module Mutations
 
       if stripe_product == ENV['STRIPE_FREE_PLAN_ID']
         max_plans = 1 # 1 plan per workspace
-      elseif stripe_product == ENV['STRIPE_PRO_PLAN_ID']
+      elsif stripe_product == ENV['STRIPE_PRO_PLAN_ID']
         max_plans = Float::INFINITY # unlimited plans per workspace
       else
         max_plans = 0 # no plans allowed
