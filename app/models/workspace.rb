@@ -46,4 +46,19 @@ class Workspace < ApplicationRecord
   def public_domain?
     ['gmail', 'outlook', 'yahoo', 'hey.com'].any? { |d| domain&.include? d }
   end
+
+
+  def update_stripe_subscription_quantity
+    # Find the associated Stripe subscription
+    subscription = Stripe::Subscription.retrieve(stripe_product)
+
+    # Update the subscription's quantity to reflect the number of members
+    quantity = workspace_members.count
+    Stripe::Subscription.update(
+      subscription.id,
+      quantity: quantity
+    )
+
+    Rails.logger.info "Stripe subscription with id: #{subscription.id} was updated with a quantity of #{quantity}"
+  end
 end

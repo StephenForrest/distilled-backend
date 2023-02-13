@@ -21,23 +21,13 @@ class WorkspaceMember < ApplicationRecord
   belongs_to :workspace
   belongs_to :user
 
-  after_create :update_stripe_subscription_quantity
+  after_create :update_associated_workspace_stripe_subscription_quantity
+  after_destroy :update_associated_workspace_stripe_subscription_quantity
 
   private
 
-  def update_stripe_subscription_quantity
-    # Find the workspace and its associated Stripe subscription
-    workspace = self.workspace
-    subscription = Stripe::Subscription.retrieve(workspace.stripe_product)
-
-    # Update the subscription's quantity to reflect the number of members
-    quantity = workspace.workspace_members.count
-    Stripe::Subscription.update(
-      subscription.id,
-      quantity: quantity
-    )
-
-    Rails.logger.info "Stripe subscription with id: #{subscription.id} was updated with a quantity of #{quantity}"
+  def update_associated_workspace_stripe_subscription_quantity
+    workspace.update_stripe_subscription_quantity
   end
   
   enum :role, {
