@@ -8,6 +8,8 @@ module Mutations
 
     def resolve(name:)
       stripe_product = current_workspace.stripe_product
+      STRIPE_FREE_PLAN_ID = ENV['STRIPE_FREE_PLAN_ID']
+      STRIPE_PRO_PLAN_ID = ENV['STRIPE_PRO_PLAN_ID']
 
       if stripe_product == STRIPE_FREE_PLAN_ID
         max_plans = 1 # 1 plan per workspace
