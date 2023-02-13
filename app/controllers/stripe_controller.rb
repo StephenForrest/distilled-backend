@@ -35,6 +35,7 @@ class StripeController < ApplicationController
         Rails.logger.error "Stripe checkout session completed - Workspace with email domain: #{domain} was NOT found"
       end    
     when 'customer.subscription.created'
+      update_workspace_quantity(event)
       workspace = StripeCustomer.find_by(stripe_customer_id: event.data.object.customer).workspace
       if workspace
         workspace.update!(stripe_product: event.data.object.plan.product)
