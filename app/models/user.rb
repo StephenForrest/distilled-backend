@@ -65,6 +65,14 @@ class User < ApplicationRecord
     end
   end
 
+  def add_user_to_workspace_subscription
+    if workspace.users.count >= 1
+    StripeHelper.add_user_to_workspace_subscription(stripe_customer_id: workspace.stripe_customer_id)
+    else
+      Rails.logger.error "Stripe subscription not found for workspace with id: #{workspace.id}"
+    end
+  end
+
   def create_verification_email
     token = SecureRandom.uuid
     user_email_verifications.create!(token:)
