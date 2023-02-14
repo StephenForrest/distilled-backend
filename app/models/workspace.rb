@@ -35,6 +35,7 @@ class Workspace < ApplicationRecord
 
   has_many :integrations, dependent: :destroy
 
+def user_restrictions
   customer = Stripe::Customer.retrieve(workspace.stripe_customer_id)
   subscription = customer.subscriptions.data.first
 

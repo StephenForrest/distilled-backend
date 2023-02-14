@@ -21,16 +21,6 @@ class WorkspaceMember < ApplicationRecord
   belongs_to :workspace
   belongs_to :user
 
-  private
-
-  def update_subscription_quantity
-    workspace = self.workspace
-    customer = Stripe::Customer.retrieve(workspace.stripe_customer_id)
-    subscription = customer.subscriptions.data.first
-    quantity = workspace.workspace_members.count
-    Stripe::Subscription.update(subscription.id, quantity: quantity)
-  end
-
   enum :role, {
     admin: 0
   }
