@@ -68,6 +68,7 @@ class User < ApplicationRecord
   def add_user_to_workspace_subscription
     if workspace.users.count >= 1
     StripeHelper.add_user_to_workspace_subscription(stripe_customer_id: workspace.stripe_customer_id)
+    Rails.logger.info "Added user to workspace subscription with id: #{workspace.id}"
     else
       Rails.logger.error "Stripe subscription not found for workspace with id: #{workspace.id}"
     end

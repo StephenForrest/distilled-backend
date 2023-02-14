@@ -25,8 +25,10 @@ class WorkspaceMember < ApplicationRecord
 
   def update_subscription_quantity
     workspace = self.workspace
+    customer = Stripe::Customer.retrieve(workspace.stripe_customer_id)
+    subscription = customer.subscriptions.data.first
     quantity = workspace.workspace_members.count
-    Stripe::Subscription.update(workspace.stripe_product, quantity: quantity)
+    Stripe::Subscription.update(subscription.id, quantity: quantity)
   end
 
   enum :role, {
