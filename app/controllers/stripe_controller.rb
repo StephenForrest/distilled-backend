@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class StripeController < ApplicationController
+  helpers StripeHelper
   def webhooks
     event = nil
 
