@@ -73,6 +73,7 @@ def user_restrictions
   if workspace.users = workspace.users.limit(max_users)
     raise GraphQL::ExecutionError, "You have reached the maximum number of users for your plan. Please upgrade your plan to add more users."
   end
+end
 
   def self.create_default!(user:)
     workspace = Workspace.create!(
