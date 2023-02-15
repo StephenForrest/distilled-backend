@@ -3,10 +3,10 @@ require 'jwt'
 rsa_private = OpenSSL::PKey::RSA.generate 2048
 rsa_public = rsa_private.public_key
 
-token = JWT.encode payload, rsa_private, 'RS256'
+paragonToken = JWT.encode payload, rsa_private, 'RS256'
 
-puts token
+puts paragonToken
 
-decoded_token = JWT.decode token, rsa_public, true, { algorithm: 'RS256' }
+decoded_token = JWT.decode paragonToken, rsa_public, true, { algorithm: 'RS256' }
 
 puts decoded_token
