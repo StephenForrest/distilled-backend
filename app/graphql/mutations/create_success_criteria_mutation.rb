@@ -22,12 +22,10 @@ module Mutations
       goal = current_workspace.goals.find(goal_id)
       stripe_product = current_workspace.stripe_product
 
-      if stripe_product == ENV['STRIPE_FREE_PLAN_ID']
-        max_success_criteria = 1 # 1 plan per workspace
-      elsif stripe_product == ENV['STRIPE_PRO_PLAN_ID']
+      if stripe_product == ENV['STRIPE_PRO_PLAN_ID']
         max_success_criteria = Float::INFINITY # unlimited plans per workspace
       else
-        max_success_criteria = 0 # no plans allowed
+        max_success_criteria = 24 # no plans allowed
       end
       
       if goal.success_criterias.count >= max_success_criteria    
