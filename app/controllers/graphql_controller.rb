@@ -11,8 +11,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      current_user:,
-      current_workspace:
+      current_user: current_user,
+      current_workspace: current_workspace
     }
     result = ApiGetdistilledIoSchema.execute(query, variables:, context:, operation_name:)
 
