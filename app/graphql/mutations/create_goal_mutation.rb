@@ -18,7 +18,7 @@ module Mutations
         max_goals = 6 # no plans allowed
       end
     
-      if plan.goals.count >= max_goals    
+      if plan.goals.count >= max_goals
         return GraphQL::ExecutionError.new("You have reached the maximum number of goals allowed on the free plan")
       end
     

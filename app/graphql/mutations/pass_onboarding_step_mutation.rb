@@ -3,9 +3,7 @@
 module Mutations
   class PassOnboardingStepMutation < BaseAuthorizedMutation
     class StepNameEnum < Types::BaseEnum
-      value 'SURVEY', value: ::Workspaces::OnboardingSteps::SURVEY
-      value 'DEMO', value: ::Workspaces::OnboardingSteps::DEMO
-      value 'SUBSCRIPTION', value: ::Workspaces::OnboardingSteps::SUBSCRIPTION
+      value 'INFORMATION', value: ::Workspaces::OnboardingSteps::INFORMATION
     end
 
     argument :name, StepNameEnum, required: true
