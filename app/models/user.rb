@@ -33,22 +33,22 @@ class User < ApplicationRecord
     joined: 1
   }
 
-  def self.signup(email:, password:, first_name:, l)
+  def self.signup(email:, password:, first_name:, last_name:)
     User.transaction do
       password_encrypted = BCrypt::Engine.hash_secret(password,
                                                       Rails.application.credentials.config[:password_salt])
       new_user = User.find_by(email:) || User.new(email:)
-      new_user.update!(password_encrypted:, name:)
+      new_user.update!(password_encrypted:, first_name:, last_name:)
       new_user.create_or_add_to_workspace
       new_user.create_verification_email
       new_user
     end
   end
 
-  def self.signup_google(email:, first_name:, :last_name)
+  def self.signup_google(email:, first_name:, last_name:)
     User.transaction do
       new_user = User.find_by(email:) || User.new(email:)
-      new_user.update!(first_name:, :last_name)
+      new_user.update!(first_name:, last_name:)
       new_user.create_or_add_to_workspace
       new_user.create_verification_email
       new_user
