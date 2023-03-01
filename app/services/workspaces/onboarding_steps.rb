@@ -2,14 +2,10 @@
 
 module Workspaces
   class OnboardingSteps
-    SURVEY = 'survey'
-    SUBSCRIPTION = 'subscription'
-    DEMO = 'demo'
+    INFORMATION = 'information'
 
     ALL = [
-      SURVEY,
-      SUBSCRIPTION,
-      DEMO
+      INFORMATION,
     ].freeze
 
     attr_reader :workspace
