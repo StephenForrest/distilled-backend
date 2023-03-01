@@ -23,9 +23,9 @@ default: &default
 
 development:
   <<: *default
-  url: <%= Rails.application.credentials.config[:database_url_dev] %>
-  database: getdistilled_dev
-  password: <%= Rails.application.credentials.config[:database_password_dev] %>
+  database: getdistilled_development
+  username: <%= ENV.fetch("PG_USERNAME") { 'getdistilled' } %>
+
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
