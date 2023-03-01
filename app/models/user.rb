@@ -8,7 +8,8 @@
 #  email              :string(255)      not null
 #  email_verified     :boolean          default(FALSE)
 #  invite_status      :integer          default("invited")
-#  name               :string(255)      not null
+#  first_name               :string(255)      not null
+#  last_name                :string(255)      not null
 #  password_encrypted :string(255)
 #  profile_pic        :string           default("f")
 #  created_at         :datetime         not null
@@ -32,7 +33,7 @@ class User < ApplicationRecord
     joined: 1
   }
 
-  def self.signup(email:, password:, name:)
+  def self.signup(email:, password:, first_name:, l)
     User.transaction do
       password_encrypted = BCrypt::Engine.hash_secret(password,
                                                       Rails.application.credentials.config[:password_salt])
@@ -44,10 +45,10 @@ class User < ApplicationRecord
     end
   end
 
-  def self.signup_google(email:, name:)
+  def self.signup_google(email:, first_name:, :last_name)
     User.transaction do
       new_user = User.find_by(email:) || User.new(email:)
-      new_user.update!(name:)
+      new_user.update!(first_name:, :last_name)
       new_user.create_or_add_to_workspace
       new_user.create_verification_email
       new_user
@@ -72,7 +73,7 @@ class User < ApplicationRecord
   end
 
   def first_name
-    name.split(' ').first || email
+    first_name || email
   end
 
   def user_domain
