@@ -84,4 +84,4 @@ test:
 #
 production:
   <<: *default
-  url: postgres://getdistilledproduser:tQTQ2GHAyAifw47clbdCAhxrrdSH2fwx@dpg-cfkbqo1mbjsn9ebhfvo0-a.oregon-postgres.render.com/getdistilledprod
+  url: <%= Rails.application.credentials.config[:database_url_prod] %>
