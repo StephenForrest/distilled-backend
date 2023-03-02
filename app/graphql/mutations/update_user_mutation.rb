@@ -7,7 +7,7 @@ module Mutations
 
     field :user, type: Types::User::CurrentUserType, null: false
 
-    def resolve(name:)
+    def resolve(first_name:, last_name:)
       current_user.update!(first_name:)
       current_user.update!(last_name:)
       { user: current_user.reload }

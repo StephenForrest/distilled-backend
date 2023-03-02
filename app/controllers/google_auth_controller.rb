@@ -40,7 +40,7 @@ class GoogleAuthController < ApplicationController
       user.update!(profile_pic: info['picture'], email_verified: true, invite_status: 'joined')
       user
     else
-      User.signup_google(email: info['email'], first_name: info['first_name'], last_name: info['last_name'])
+      User.signup_google(email: info['email'], first_name: info['displayName'])
     end
   end
 end

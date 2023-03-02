@@ -8,8 +8,10 @@
 #  email              :string(255)      not null
 #  email_verified     :boolean          default(FALSE)
 #  invite_status      :integer          default("invited")
-#  first_name               :string(255)      not null
-#  last_name                :string(255)      not null
+#  first_name         :string(255)
+#  last_name          :string(255)
+#  position           :string(255)
+#  company            :string(255)
 #  password_encrypted :string(255)
 #  profile_pic        :string           default("f")
 #  created_at         :datetime         not null
@@ -20,6 +22,7 @@
 #  index_users_on_email  (email)
 #
 class User < ApplicationRecord
+  SIGNUP_ATTRIBUTES = %i[first_name last_name position company].freeze
   has_many :user_sessions, dependent: :destroy
   has_many :workspace_members, dependent: :destroy
   has_many :workspaces, through: :workspace_members
@@ -33,25 +36,24 @@ class User < ApplicationRecord
     joined: 1
   }
 
-  def self.signup(email:, password:, first_name:, last_name:)
-    User.transaction do
-      password_encrypted = BCrypt::Engine.hash_secret(password,
-                                                      Rails.application.credentials.config[:password_salt])
-      new_user = User.find_by(email:) || User.new(email:)
-      new_user.update!(password_encrypted:, first_name:, last_name:)
-      new_user.create_or_add_to_workspace
-      new_user.create_verification_email
-      new_user
+  def self.signup(email:, password:, **options)
+    transaction do
+      password_encrypted = BCrypt::Engine.hash_secret(password, Rails.application.credentials.config[:password_salt])
+      find_or_create_by(email:).tap do |user|
+        user.update!(options.slice(*SIGNUP_ATTRIBUTES).merge(password_encrypted:))
+        create_or_add_to_workspace
+        create_verification_email
+      end
     end
   end
 
-  def self.signup_google(email:, first_name:, last_name:)
+  def self.signup_google(email:, **options)
     User.transaction do
-      new_user = User.find_by(email:) || User.new(email:)
-      new_user.update!(first_name:, last_name:)
-      new_user.create_or_add_to_workspace
-      new_user.create_verification_email
-      new_user
+      find_or_create_by(email:).tap do |user|
+        user.update!(options.slice(*SIGNUP_ATTRIBUTES))
+        create_or_add_to_workspace
+        create_verification_email
+      end
     end
   end
 
@@ -60,7 +62,7 @@ class User < ApplicationRecord
 
     existing_workspace = Workspace.find_by(domain: user_domain, auto_join_from_domain: true)
     if existing_workspace.present?
-      existing_workspace.workspace_members.create!(user:)
+      existing_workspace.workspace_members.create!(user: self)
     elsif public_domain?
       Workspace.create_default!(user: self)
     end
@@ -70,10 +72,6 @@ class User < ApplicationRecord
     token = SecureRandom.uuid
     user_email_verifications.create!(token:)
     UserMailer.with(user: self, token:).verify_email.deliver_later
-  end
-
-  def first_name
-    first_name || email
   end
 
   def user_domain

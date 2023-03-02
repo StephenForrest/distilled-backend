@@ -3,7 +3,10 @@
 # This will guess the User class
 FactoryBot.define do
   factory :user do
-    name  { 'John Doe' }
+    first_name { 'John' }
+    last_name { 'Doe' }
+    company { 'The John Doe Co.' }
+    position { 'leadership' }
     email { 'john@example.com' }
     password_encrypted { BCrypt::Engine.hash_secret('test', Rails.application.credentials.config[:password_salt]) }
 
