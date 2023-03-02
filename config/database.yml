@@ -84,4 +84,4 @@ test:
 #
 production:
   <<: *default
-  url: <%= Rails.application.credentials.config[:database_url_prod] %>
+  url: <%= Rails.application.credentials.config[:database_url] %>
