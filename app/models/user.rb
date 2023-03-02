@@ -41,8 +41,8 @@ class User < ApplicationRecord
       password_encrypted = BCrypt::Engine.hash_secret(password, Rails.application.credentials.config[:password_salt])
       find_or_create_by(email:).tap do |user|
         user.update!(options.slice(*SIGNUP_ATTRIBUTES).merge(password_encrypted:))
-        create_or_add_to_workspace
-        create_verification_email
+        user.create_or_add_to_workspace
+        user.create_verification_email
       end
     end
   end
@@ -51,8 +51,8 @@ class User < ApplicationRecord
     User.transaction do
       find_or_create_by(email:).tap do |user|
         user.update!(options.slice(*SIGNUP_ATTRIBUTES))
-        create_or_add_to_workspace
-        create_verification_email
+        user.create_or_add_to_workspace
+        user.create_verification_email
       end
     end
   end
