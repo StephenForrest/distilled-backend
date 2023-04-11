@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     # post '/measurements', to: 'measurements#execute'
   end
 
+  if Rails.env.development?
+    mount Lookbook::Engine, at: '/lookbook'
+  end
+
   unless Rails.env.development?
     Sidekiq::Web.use(Rack::Auth::Basic) do |username, password|
       # Protect against timing attacks:
