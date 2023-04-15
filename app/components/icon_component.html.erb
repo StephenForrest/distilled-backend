@@ -1,0 +1,7 @@
+<!-- app/components/icon_component.html.erb -->
+
+<% if @url %>
+  <div class="<%= icon_classes %>" style="<%= icon_style %>"></div>
+<% else %>
+  <i class="<%= icon_classes %>"></i>
+<% end %>

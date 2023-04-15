@@ -1,0 +1,10 @@
+# app/views/components/input_component.html.erb
+
+<div>
+  <label for="<%= @id %>" class="block text-sm font-medium text-gray-700">
+    <%= @label %>
+  </label>
+  <div class="mt-1">
+    <input type="<%= @type %>" name="<%= @id %>" id="<%= @id %>" class="<%= input_classes %>" placeholder="<%= @placeholder %>" value="<%= @value %>">
+  </div>
+</div>

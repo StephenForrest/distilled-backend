@@ -1,0 +1,48 @@
+<!-- app/views/components/data_table_row.html.erb -->
+
+<tr>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <%= content_tag :div, class: 'flex items-center' do %>
+      <% if has_content?(:badge) %>
+        <%= content_tag :div, class: 'rounded-full bg-green-100 text-green-800 px-2 py-1 text-xs font-semibold mr-2' do %>
+          <%= content_for :badge %>
+        <% end %>
+      <% end %>
+      <% if has_content?(:avatar) %>
+        <%= content_for :avatar %>
+      <% end %>
+      <% if has_content?(:text) %>
+        <%= content_for :text %>
+      <% end %>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if has_content?(:icon) %>
+      <%= content_for :icon %>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if has_content?(:date) %>
+      <%= content_tag :span, class: 'font-bold' do %>
+        <%= content_for :date %>
+      <% end %>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if has_content?(:progress_bar) %>
+      <%= content_for :progress_bar %>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap">
+    <% if has_content?(:percent) %>
+      <%= content_tag :span, class: 'font-bold' do %>
+        <%= content_for :percent %>
+      <% end %>
+    <% end %>
+  </td>
+  <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+    <% if has_expanded_row? %>
+      <%= link_to 'Expand', '#', class: 'text-indigo-600 hover:text-indigo-900' %>
+    <% end %>
+  </td>
+</tr>
