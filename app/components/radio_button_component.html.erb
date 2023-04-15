@@ -1,0 +1,28 @@
+<!-- app/components/radio_component.html.erb -->
+<% if square? %>
+  <% @options.each do |value, label| %>
+    <label class="<%= square_radio_container_classes %>">
+      <input type="radio"
+             class="<%= square_radio_classes %>"
+             name="<%= @name %>"
+             value="<%= value %>"
+             <%= 'checked="checked"' if selected?(value) %>>
+      <span class="<%= square_radio_label_classes %>">
+        <%= label %>
+      </span>
+    </label>
+  <% end %>
+<% else %>
+  <% @options.each do |value, label| %>
+    <div class="<%= radio_container_classes %>">
+      <input type="radio"
+             class="<%= radio_classes %>"
+             name="<%= @name %>"
+             value="<%= value %>"
+             <%= 'checked="checked"' if selected?(value) %>>
+      <label class="<%= radio_label_classes %>">
+        <%= label %>
+      </label>
+    </div>
+  <% end %>
+<% end %>

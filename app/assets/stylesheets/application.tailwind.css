@@ -1,13 +1,29 @@
+@import "../../components/badge_component.rb";
+@import "../../components/button_component.rb";
+@import "../../components/card_component.rb";
+@import "../../components/accordion_component.rb";
+@import "../../components/dropdown_component.rb";
+@import "../../components/north_star_modal_component.rb";
+@import "../../components/sharing_modal_component.rb";
+@import "../../components/locked_resource_modal_component.rb";
+@import "../../components/checkin_input_component.rb";
+@import "../../components/tabs_component.rb";
+@import "../../components/toggle_component.rb";
+@import "../../components/activity_feed_component.rb";
+@import "../../components/avatar_component.rb";
+@import "../../components/data_table_component.rb";
+@import "../../components/data_table_dropdown_component.rb";
+@import "../../components/data_table_row_component.rb";
+@import "../../components/date_picker_component.rb";
+@import "../../components/drawer_component.rb";
+@import "../../components/google_auth_component.rb";
+@import "../../components/icon_component.rb";
+@import "../../components/input_component.rb";
+@import "../../components/nav_component.rb";
+@import "../../components/progress_bar_component.rb";
+@import "../../components/radio_button_component.rb";
+@import "../../components/tabs_component.rb";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
-}
-
-*/

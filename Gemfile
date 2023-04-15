@@ -112,3 +112,5 @@ gem 'stripe', '~> 8.1'
 gem 'tailwindcss-rails'
 
 gem 'view_component'
+gem "lookbook"
+

@@ -1,0 +1,15 @@
+<!-- app/views/components/data_table_dropdown.html.erb -->
+
+<%= render DataTableRowComponent.new(data: @data, options: @options) do |row| %>
+  <% row.icon_with_data_1 do %>
+    <!-- Your HTML for icon with data 1 -->
+  <% end %>
+
+  <% row.icon_with_data_2 do %>
+    <!-- Your HTML for icon with data 2 -->
+  <% end %>
+
+  <% row.expanded_content do %>
+    <!-- Your HTML for the expanded content -->
+  <% end %>
+<% end %>
