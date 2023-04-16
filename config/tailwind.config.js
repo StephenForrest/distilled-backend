@@ -9,7 +9,6 @@ module.exports = {
     './app/components/**/*.{erb,haml,html,slim,rb}',
   ],
   theme: {
-    extend: {
       colors: {
         'brand': '#FE3CE3',
         'brand-light': '#FFC0F0',
@@ -43,6 +42,7 @@ module.exports = {
         'info-light': '#7ED4F5',
         'info-dark': '#0095C6'
       },
+    extend: {
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },

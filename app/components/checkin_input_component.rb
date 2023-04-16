@@ -1,8 +1,8 @@
 # app/components/wysiwyg_editor_component.rb
 
 class CheckinInputComponent < ViewComponent::Base
-  def initialize(content:)
-    @content = content
+  def initialize(text:)
+    @text = text
   end
 
   def toolbar_buttons

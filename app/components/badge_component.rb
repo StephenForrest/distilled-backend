@@ -14,7 +14,7 @@ class BadgeComponent < ViewComponent::Base
       when :engineering
           "bg-badge-engineering"
       when :design
-          "bg-badge-design"
+          "bg-brand"
       when :marketing
           "bg-badge-marketing"
       when :sales

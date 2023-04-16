@@ -2,6 +2,6 @@
 
 class CheckinInputComponentPreview < ViewComponent::Preview
   def default
-    render(CheckinInputComponent.new(title: "title"))
+    render CheckinInputComponent.new(text: :text)
   end
 end
