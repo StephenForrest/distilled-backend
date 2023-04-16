@@ -1,7 +1,7 @@
-# frozen_string_literal: true
-
 class ProgressBarComponentPreview < ViewComponent::Preview
-  def default
-    render(ProgressBarComponent.new(title: "title"))
+  # @param percent number
+
+  def default(percent: :percent)
+    render ProgressBarComponent.new(percent: percent)
   end
 end

@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 class ProgressBarComponent < ViewComponent::Base
-  def initialize(title:)
-    @title = title
+  # @param percent number
+  def initialize(percent: :percent)
+    @percent = percent
   end
-
 end
