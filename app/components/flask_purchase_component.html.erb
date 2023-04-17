@@ -1,0 +1,63 @@
+<!-- app/components/flask_purchase_component.html.erb -->
+
+<%# This code sets up the "component" variable %>
+<%# DO NOT REMOVE OR MODIFY %>
+<% component = self %>
+
+<div class="flex flex-col space-y-4">
+  <div class="flex flex-col space-y-2">
+    <label for="quantity">Quantity</label>
+    <select data-target="flask-purchase.quantity" class="form-select">
+      <% component.quantity_options.each do |quantity| %>
+        <option value="<%= quantity %>"><%= quantity %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <label for="name">Name</label>
+    <input type="text" data-target="flask-purchase.name" class="form-input">
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <label for="email">Email</label>
+    <input type="email" data-target="flask-purchase.email" class="form-input">
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <label for="card-element">Card Number</label>
+    <div id="card-element" data-target="flask-purchase.cardElement" class="form-input"></div>
+    <div id="card-errors" class="text-red-500"></div>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <label for="exp_month">Expiration Month</label>
+    <select data-target="flask-purchase.expMonth" class="form-select">
+      <% (1..12).each do |n| %>
+        <option value="<%= n.to_s.rjust(2, '0') %>"><%= n.to_s.rjust(2, '0') %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <label for="exp_year">Expiration Year</label>
+    <select data-target="flask-purchase.expYear" class="form-select">
+      <% (Date.today.year..(Date.today.year + 10)).each do |n| %>
+        <option value="<%= n.to_s %>"><%= n.to_s %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <label for="cvc">CVC</label>
+    <input type="password" data-target="flask-purchase.cvc" class="form-input">
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <button data-action="click->flask-purchase#checkout" data-disable-with="Processing..." data-target="flask-purchase.checkoutButton" class="btn-primary">Pay</button>
+  </div>
+
+  <div class="flex flex-col space-y-2">
+    <span>Total: <%= component.total %></span>
+  </div>
+</div>
