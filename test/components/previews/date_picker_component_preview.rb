@@ -1,4 +1,4 @@
-class DatePickerPreview < Lookbook::Preview
+class DatePickerComponentPreview < Lookbook::Preview
   def default
     DatePickerComponent.new(
       name: "date",

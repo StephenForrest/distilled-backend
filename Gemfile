@@ -58,6 +58,7 @@ gem 'rack-cors'
 gem 'pusher'
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'rubocop-rails', '~> 2.15'
   gem 'annotate'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -68,7 +69,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'dotenv-rails'
   gem 'lookbook'
   gem 'web-console'
 end

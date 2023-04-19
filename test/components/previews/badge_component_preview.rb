@@ -2,45 +2,33 @@
 
 class BadgeComponentPreview < ViewComponent::Preview
 
-  def default_theme
-    render BadgeComponent.new(theme: :product, text: :default) do
-      "Product Badge"
-    end
+  # @param badge_text text "Text content"
+  # @param theme select { choices: [product, engineering, design, marketing, sales, support] } "Required. Badge theme."
+  def default_theme(badge_text: 'Badge Text', theme: :product)
+    render(BadgeComponent.new(theme)) { badge_text }
   end
+
+  def product_theme
+    render(BadgeComponent.new(:product)) { 'Product Badge' }
+  end
+
   def engineering_theme
-    render BadgeComponent.new(theme: :engineering, text: :engineering) do
-      "Engineering Badge"
-    end
+    render(BadgeComponent.new(:engineering)) { 'Engineering Badge' }
   end
+
   def design_theme
-    render BadgeComponent.new(theme: :design, text: :design) do
-      "Design Badge"
-    end
+    render(BadgeComponent.new(:design)) { 'Design Badge' }
   end
+
   def marketing_theme
-    render BadgeComponent.new(theme: :marketing, text: :marketing) do
-      "Marketing Badge"
-    end
+    render(BadgeComponent.new(:marketing)) { 'Marketing Badge' }
   end
+
   def sales_theme
-    render BadgeComponent.new(theme: :sales, text: :sales) do
-      "Sales Badge"
-    end
+    render(BadgeComponent.new(:sales)) { 'Sales Badge' }
   end
+
   def support_theme
-    render BadgeComponent.new(theme: :support, text: :support) do
-      "Support Badge"
-    end
-  end
-
-  # @!endgroup
-
-  private
-
-
-  def theme
-    BadgeComponent::THEMES.map do |theme|
-      [theme.to_s.titleize, theme]
-    end
+    render(BadgeComponent.new(:support)) { 'Support Badge' }
   end
 end

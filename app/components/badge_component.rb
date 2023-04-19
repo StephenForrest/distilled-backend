@@ -1,42 +1,24 @@
-class BadgeComponent < ViewComponent::Base
-  
-  THEMES = %i[product engineering design marketing sales support].freeze
+# frozen_string_literal: true
 
-  def initialize(theme: :theme_options, text: :text)
-      @theme = theme
-      @text = text
+class BadgeComponent < ViewComponent::Base
+  attr_reader :theme
+
+  THEMES = {
+    product: 'bg-badge-product',
+    engineering: 'bg-badge-engineering',
+    design: 'bg-brand',
+    marketing: 'bg-badge-marketing',
+    sales: 'bg-badge-sales',
+    support: 'bg-badge-support',
+  }.freeze
+
+  def initialize(theme)
+    super
+
+    @theme = theme.to_sym
   end
-      
-  def theme
-      case @theme
-      when :product
-          "bg-badge-product"
-      when :engineering
-          "bg-badge-engineering"
-      when :design
-          "bg-brand"
-      when :marketing
-          "bg-badge-marketing"
-      when :sales
-          "bg-badge-sales"
-      when :support
-          "bg-badge-support"
-       end
+
+  def theme_style
+    THEMES.fetch(theme, '')
   end
-  def text
-      case @text
-      when :product
-          "Product Badge"
-      when :engineering
-          "Engineering Badge"
-      when :design
-          "Design Badge"
-      when :marketing
-          "Marketing Badge"
-      when :sales
-          "Sales Badge"
-      when :support
-          "Support Badge"
-      end
-   end
 end
