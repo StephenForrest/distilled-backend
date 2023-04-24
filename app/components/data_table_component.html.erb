@@ -1,0 +1,23 @@
+<!-- app/views/components/data_table_component.html.erb -->
+
+<table class="table">
+  <thead>
+    <tr>
+      <%= content_for :header %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @data.each do |row_data| %>
+      <tr>
+        <%= content_for :row, data: row_data %>
+      </tr>
+      <% if row_data[:expanded_content] %>
+        <tr>
+          <td colspan="<%= @options[:columns] %>">
+            <%= content_for :expanded_row, data: row_data[:expanded_content] %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

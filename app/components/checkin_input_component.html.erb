@@ -1,0 +1,22 @@
+<div class="border border-gray-300 rounded p-2">
+  <div class="border-b border-gray-300 p-2 flex">
+    <% toolbar_buttons.each do |button| %>
+      <button type="button" class="bg-white hover:bg-gray-100 text-gray-600 font-bold py-2 px-4 border border-gray-300 rounded inline-flex items-center" data-command="<%= button[:type] %>">
+        <i class="fa fa-<%= button[:icon] %> mr-2"></i><%= button[:label] %>
+      </button>
+    <% end %>
+  </div>
+  <div class="mt-2">
+    <textarea class="form-textarea border border-gray-300 rounded w-full" rows="8"><%= @text %></textarea>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll("[data-command]").forEach(function(button) {
+      button.addEventListener("click", function() {
+        document.execCommand(button.dataset.command, false, null);
+      });
+    });
+  });
+</script>

@@ -1041,3 +1041,14 @@ Metrics/ModuleLength:
 Layout/LineLength:
   Exclude:
     - '**/*spec.rb'
+
+# When defining a hash over multiple lines, always add a trailing comma so the next change does not have to affect more
+# than one line, and lines can be reordered easily. Same applies for arg lists.
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: false
