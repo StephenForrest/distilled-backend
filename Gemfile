@@ -55,10 +55,12 @@ gem 'rookout'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
-gem 'pusher'
+group :development do
+  gem 'lookbook'
+end
 
 group :development, :test do
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', '~> 2.7'
   gem 'rubocop-rails', '~> 2.15'
   gem 'annotate'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -68,16 +70,12 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.1'
 end
 
-group :development do
-  gem 'lookbook'
-  gem 'web-console'
-end
-
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'shoulda-matchers', '~> 5.0'
 end
 
 gem 'pry', '~> 0.14.1'

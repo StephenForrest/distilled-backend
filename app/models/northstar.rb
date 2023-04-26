@@ -8,9 +8,6 @@
 #  updated_at :datetime         not null
 #
 class Northstar < ApplicationRecord
-    # Define associations
-    belongs_to :organization
-
     # Define validations
     validates :title, presence: true
 end
