@@ -8,6 +8,6 @@
 #  updated_at :datetime         not null
 #
 class Northstar < ApplicationRecord
-    # Define validations
-    validates :title, presence: true
+  # Define validations
+  validates :title, presence: true
 end
