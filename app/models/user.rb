@@ -5,14 +5,14 @@
 # Table name: users
 #
 #  id                 :bigint           not null, primary key
+#  company            :string
 #  email              :string(255)      not null
 #  email_verified     :boolean          default(FALSE)
+#  first_name         :string
 #  invite_status      :integer          default("invited")
-#  first_name         :string(255)
-#  last_name          :string(255)
-#  position           :string(255)
-#  company            :string(255)
+#  last_name          :string
 #  password_encrypted :string(255)
+#  position           :string
 #  profile_pic        :string           default("f")
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
